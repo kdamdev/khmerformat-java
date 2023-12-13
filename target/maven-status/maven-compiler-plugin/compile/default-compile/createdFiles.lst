@@ -5,4 +5,3 @@ dev\kdam\constraints\SolarMonth.class
 dev\kdam\constraints\Numeric.class
 dev\kdam\entities\SolarDateTimeEntity.class
 dev\kdam\utils\SolarDateTime.class
-dev\kdam\utils\Numeric.class
