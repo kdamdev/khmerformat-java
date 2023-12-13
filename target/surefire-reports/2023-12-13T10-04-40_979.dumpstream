@@ -1,5 +1,0 @@
-# Created at 2023-12-13T10:04:42.097
-Boot Manifest-JAR contains absolute paths in classpath 'D:\oss\playing\gits\khmerformat\target\test-classes'
-Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
-'other' has different root
-
