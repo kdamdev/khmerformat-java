@@ -3,7 +3,6 @@ package dev.kdam.utils;
 import dev.kdam.constraints.Numeric;
 import dev.kdam.constraints.NumericText;
 
-import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -16,7 +15,8 @@ public class KhmerNumeric {
     /**
      * @param number
      */
-    public KhmerNumeric(String number) {
+    public KhmerNumeric(String number)  {
+        if (!number.matches("^[^.,]*\\.?[^.,]*$")) throw new IllegalArgumentException("Invalid String Number.");
         this.number = number;
     }
 
@@ -40,8 +40,9 @@ public class KhmerNumeric {
      * @return
      */
     public String toKhmer(boolean comma){
-        DecimalFormat formatter = new DecimalFormat("#,###.##############");
-        return  Arrays.stream(formatter.format(Double.parseDouble(this.number)).split( "" )).map( x-> x.indexOf( '.' ) != -1 || x.indexOf( ',' ) != -1 ? x : Numeric.num[Integer.parseInt( x )]
+        String[] parts = this.number.split("\\.");
+        parts[0] = parts[0].replaceAll("(?<=\\d)(?=(\\d{3})+$)", ",");
+        return  Arrays.stream(String.join( ".", parts ).split( "" )).map( x-> x.indexOf( '.' ) != -1 || x.indexOf( ',' ) != -1 ? x : Numeric.num[Integer.parseInt( x )]
         ).collect( Collectors.joining("") );
     }
 

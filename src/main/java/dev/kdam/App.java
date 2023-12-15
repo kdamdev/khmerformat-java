@@ -11,13 +11,12 @@ import java.math.BigDecimal;
  */
 public class App 
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
         //System.out.println( "Hello World!" );
         KhmerSolarDateTime solar = new KhmerSolarDateTime(01,12,2023);
         System.out.println( solar.toString());
         System.out.println( "-----------------" );
-        KhmerNumeric numeric = new KhmerNumeric(  "738474659311");
+        KhmerNumeric numeric = new KhmerNumeric("123456789012345");
         System.out.println( numeric.toKhmer(true));
         System.out.println( numeric.toKhmer());
         System.out.println( numeric.toKhmerText() );
