@@ -1,9 +1,12 @@
 package dev.kdam;
 
+import dev.kdam.utils.KhmerLunarDateTime;
 import dev.kdam.utils.KhmerNumeric;
 import dev.kdam.utils.KhmerSolarDateTime;
 
 import java.math.BigDecimal;
+import java.time.chrono.ThaiBuddhistDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Hello world!
@@ -21,5 +24,11 @@ public class App
         System.out.println( numeric.toKhmer());
         System.out.println( numeric.toKhmerText() );
         System.out.println( "-----------------" );
+
+        KhmerLunarDateTime lunar = new KhmerLunarDateTime(01,12,2023);
+        System.out.println(lunar.toString());
+
+
+
     }
 }
