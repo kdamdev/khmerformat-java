@@ -1,7 +1,4 @@
-package dev.kdam.constraints;
-
-import java.util.HashMap;
-import java.util.Map;
+package dev.kdam.Utils;
 
 /**
  * NumericText

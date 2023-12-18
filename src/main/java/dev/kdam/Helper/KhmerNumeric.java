@@ -1,7 +1,7 @@
-package dev.kdam.utils;
+package dev.kdam.Helper;
 
-import dev.kdam.constraints.Numeric;
-import dev.kdam.constraints.NumericText;
+import dev.kdam.Utils.Numeric;
+import dev.kdam.Utils.NumericText;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

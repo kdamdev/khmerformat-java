@@ -1,4 +1,4 @@
-package dev.kdam.constraints;
+package dev.kdam.Utils;
 
 /**
  * DayOfWeek

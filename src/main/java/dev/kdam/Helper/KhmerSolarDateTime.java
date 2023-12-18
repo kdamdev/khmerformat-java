@@ -1,6 +1,6 @@
-package dev.kdam.utils;
+package dev.kdam.Helper;
 
-import dev.kdam.constraints.SolarMonth;
+import dev.kdam.Utils.SolarMonth;
 import dev.kdam.entities.SolarDateTime;
 
 /**
