@@ -3,6 +3,7 @@ package dev.kdam;
 import dev.kdam.Helper.KhmerLunarDateTime;
 import dev.kdam.Helper.KhmerNumeric;
 import dev.kdam.Helper.KhmerSolarDateTime;
+import dev.kdam.Utils.JourneyMoon;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -14,17 +15,17 @@ import java.time.LocalDate;
 public class App 
 {
     public static void main( String[] args ) {
-        System.out.println( "Hello World!" );
-        KhmerSolarDateTime solar = new KhmerSolarDateTime(01,12,2023);
-        System.out.println( solar.toString());
-        System.out.println( "-----------------" );
-        KhmerNumeric numeric = new KhmerNumeric("123456789012345");
-        System.out.println( numeric.toKhmer(true));
-        System.out.println( numeric.toKhmer());
-        System.out.println( numeric.toKhmerText() );
-        System.out.println( "-----------------" );
+//        System.out.println( "Hello World!" );
+//        KhmerSolarDateTime solar = new KhmerSolarDateTime(01,12,2023);
+//        System.out.println( solar.toString());
+//        System.out.println( "-----------------" );
+//        KhmerNumeric numeric = new KhmerNumeric("123456789012345");
+//        System.out.println( numeric.toKhmer(true));
+//        System.out.println( numeric.toKhmer());
+//        System.out.println( numeric.toKhmerText() );
+//        System.out.println( "-----------------" );
 
-        KhmerLunarDateTime lunar = new KhmerLunarDateTime(01,12,2016);
+        KhmerLunarDateTime lunar = new KhmerLunarDateTime(1,1,1900);
         System.out.println(lunar.toString());
         System.out.println(lunar.calculateSoryaLeangsak().get( 0 ).getLesserEra());
         System.out.println(lunar.calculateSoryaLeangsak().get( 0 ).getHarkun());
@@ -38,18 +39,7 @@ public class App
         System.out.println(lunar.calculateSoryaLeangsak().get( 1 ).getAvaman());
         System.out.println(lunar.calculateSoryaLeangsak().get( 1 ).getBodethey());
         System.out.println( "-----------------" );
-
-        int year = 2024;
-        int month = 2;
-        int day = 29;
-
-        String dayOfWeek = calculateDayOfWeekBuiltIn(year, month, day);
-        System.out.println("The day of the week for " + day + "/" + month + "/" + year + " is: " + dayOfWeek);
-
-        String dayOfWeek1 = calculateDayOfWeek(year, month, day);
-        System.out.println("The day of the week for " + day + "/" + month + "/" + year + " is: " + dayOfWeek1);
-
-
+        System.out.println(lunar.getDayOfMonth(20));
     }
 
     public static String calculateDayOfWeekBuiltIn(int year, int month, int day) {

@@ -1,4 +1,4 @@
-package dev.kdam.entities;
+package dev.kdam.Entities;
 
 /**
  * LunarDateTime

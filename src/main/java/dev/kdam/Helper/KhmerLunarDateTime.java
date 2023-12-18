@@ -3,14 +3,13 @@ package dev.kdam.Helper;
 import dev.kdam.Utils.AnimalYear;
 import dev.kdam.Utils.DayOfWeek;
 import dev.kdam.Utils.Era;
-import dev.kdam.entities.LunarDateTime;
-import dev.kdam.entities.SoryaLeangsak;
+import dev.kdam.Entities.LunarDateTime;
+import dev.kdam.Entities.SoryaLeangsak;
+import dev.kdam.Utils.JourneyMoon;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * KhmerLunarDateTime
@@ -25,11 +24,27 @@ public class KhmerLunarDateTime {
     public int calculateLesserEra() {
         return 0;
     }
-    public int getDayOFYear() {
+    public int getDayOfYear() {
         return 0;
     }
 
+    /**
+     *
+     * @param month
+     * @return 29 for odd month or 30 even month
+     */
+    public int getTotalDayOfMonth(int month){
+        return month % 2 == 0 ? 30 : 29;
+    }
+
+    public String getDayOfMonth(int day){
+        int t = day % 15 == 0 ? 15 : day % 15;
+        return t + " " + (day > 15 ? JourneyMoon.WANING.getLabel() : JourneyMoon.WAXING.getLabel());
+    }
+
     public boolean isAkthimeas() {
+        if(calculateSoryaLeangsak().get(0).getBodethey() > 24 || calculateSoryaLeangsak().get(0).getBodethey() < 6)
+            return true;
         return false;
     }
     public List<SoryaLeangsak> calculateSoryaLeangsak() {
@@ -46,7 +61,7 @@ public class KhmerLunarDateTime {
         soryaLeangsak.setHarkun((292207 * LesserEra + 373) / 800 + 1);
         soryaLeangsak.setKromathopol(800 - (292207 * LesserEra + 373) % 800 );
         soryaLeangsak.setAvaman((11 * soryaLeangsak.getHarkun() + 650) % 692);
-        soryaLeangsak.setBodethey( soryaLeangsak.getHarkun() + (int)((11 * soryaLeangsak.getHarkun() + 650) / 692) - (30 * 17069));
+        soryaLeangsak.setBodethey( (soryaLeangsak.getHarkun() + ((11 * soryaLeangsak.getHarkun() + 650) / 692)) % 30);
         return soryaLeangsak;
     }
     /**
