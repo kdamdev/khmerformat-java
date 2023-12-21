@@ -1,7 +1,7 @@
-package dev.kdam.Helper;
+package dev.kdam.khmerformat.Utils;
 
-import dev.kdam.Utils.Numeric;
-import dev.kdam.Utils.NumericText;
+import dev.kdam.khmerformat.Enum.Numeric;
+import dev.kdam.khmerformat.Enum.NumericText;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

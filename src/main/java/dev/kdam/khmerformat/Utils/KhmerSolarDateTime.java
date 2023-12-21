@@ -1,7 +1,7 @@
-package dev.kdam.Helper;
+package dev.kdam.khmerformat.Utils;
 
-import dev.kdam.Utils.SolarMonth;
-import dev.kdam.Entities.SolarDateTime;
+import dev.kdam.khmerformat.Enum.SolarMonth;
+import dev.kdam.khmerformat.Entity.SolarDateTime;
 
 /**
  *

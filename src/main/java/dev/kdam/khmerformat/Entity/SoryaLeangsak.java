@@ -1,4 +1,4 @@
-package dev.kdam.Entities;
+package dev.kdam.khmerformat.Entity;
 
 public class SoryaLeangsak {
     private int LesserEra;

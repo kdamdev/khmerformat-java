@@ -1,9 +1,6 @@
-package dev.kdam.Helper;
+package dev.kdam.khmerformat.Helper;
 
-import dev.kdam.Entities.SoryaLeangsak;
-
-import java.util.ArrayList;
-import java.util.List;
+import dev.kdam.khmerformat.Entity.SoryaLeangsak;
 
 /**
  *

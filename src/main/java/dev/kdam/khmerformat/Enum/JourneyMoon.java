@@ -1,4 +1,4 @@
-package dev.kdam.Utils;
+package dev.kdam.khmerformat.Enum;
 
 public enum JourneyMoon {
     WAXING("កើត"),
