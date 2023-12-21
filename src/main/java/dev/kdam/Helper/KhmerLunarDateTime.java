@@ -2,7 +2,7 @@ package dev.kdam.Helper;
 
 import dev.kdam.Entities.LunarDateTime;
 import dev.kdam.Entities.SoryaLeangsak;
-import dev.kdam.Utils.AnimalYear;
+import dev.kdam.Utils.ZodiacYear;
 import dev.kdam.Utils.DayOfWeek;
 import dev.kdam.Utils.Era;
 import dev.kdam.Utils.JourneyMoon;
@@ -17,22 +17,13 @@ import java.util.List;
 public class KhmerLunarDateTime {
     private final LunarDateTime lunar;
     private final LocalDate localDate;
-    private final SoryaLeangsak xLesserEra;
-    private final SoryaLeangsak zLesserEra;
+    private final SoryaLeangsakHelper helper;
     public KhmerLunarDateTime(int day, int month, int year) {
         this.lunar = new LunarDateTime();
         localDate = LocalDate.of( year, month, day);
         //initial Lesser Era
-        this.xLesserEra = getSoryaLeangsakByLesserEra( (year + 543) - 1182  );
-        this.zLesserEra = getSoryaLeangsakByLesserEra( (year + 544) - 1182  );
+        this.helper = new SoryaLeangsakHelper(year);
     }
-    public int calculateLesserEra() {
-        return 0;
-    }
-    public int getDayOfYear() {
-        return 0;
-    }
-
     /**
      *
      * @param month
@@ -46,48 +37,48 @@ public class KhmerLunarDateTime {
         int t = day % 15 == 0 ? 15 : day % 15;
         return t + " " + (day > 15 ? JourneyMoon.WANING.getLabel() : JourneyMoon.WAXING.getLabel());
     }
+
+    /**
+     * គណនារកឆ្នាំដែលមាន ៣៦៦ថ្ងៃសុរិយគតិខ្មែរ
+     * @return boolean
+     */
     public boolean is366KhmerSolar() {
-        return xLesserEra.getKromathopol() <= 207;
+        return this.helper.is366KhmerSolar();
     }
-    public boolean isAkthimeas() {
-        if (xLesserEra.getBodethey() > 24 || zLesserEra.getBodethey() < 6)
-            return true;
-//        else if (xLesserEra.getBodethey() == 24 && ze) {
-//
-//        }
+    /**
+     * ឆ្នាំបកតិមាស អធិកវារៈ ឬ ចន្ទ្រាធិមាស ១ឆ្នាំមាន១២ខែ ដោយខែជេស្ឋមាន៣០ថ្ងៃ
+     * @return boolean
+     */
+    public boolean isAthikvearak() {
+        return this.helper.isAthikvearak();
+    }
+    /**
+     * អធិកមាស បកតិវារៈ ១ឆ្នាំមាន១៣ខែ(អាសាឍ២ដង) = ៣៨៤ថ្ងៃ
+     * @return boolean
+     */
+    public boolean isAthikmeas(){
+       return this.helper.isAthikmeas();
+    }
+    /**
+     * check ches with 30 days
+     * @return boolean
+     */
+    public boolean isChes30Days(){
+        if(!this.helper.isAthikmeas()){
+            if(!this.helper.isAthikvearak()){
+                SoryaLeangsakHelper previous_year = new SoryaLeangsakHelper(this.localDate.getYear() - 1 );
+                return previous_year.isAthikmeas() && previous_year.isAthikvearak();
+            }else return true;
+        }else {
+            if(this.helper.isAthikvearak()) return false;
+        }
         return false;
-    }
-    public boolean isChantreathimeas(int kromathopol, int avoman, int newavoman){
-//        if(is366KhmerSolar(kromathopol)){
-//            return avoman < 127;
-//        }else{
-//            return avoman < 138 && avoman == 137 && newavoman == 0;
-//        }
-        return false;
-
-    }
-    public List<SoryaLeangsak> calculateSoryaLeangsak() {
-        List<SoryaLeangsak> lst = new ArrayList<>();
-        lst.add( this.getSoryaLeangsakByLesserEra( this.localDate.getYear() + 543 - 1182 ) );
-        lst.add( this.getSoryaLeangsakByLesserEra( this.localDate.getYear() + 544 - 1182 ) );
-
-        return lst;
-    }
-
-    private SoryaLeangsak getSoryaLeangsakByLesserEra(int LesserEra) {
-        SoryaLeangsak soryaLeangsak = new SoryaLeangsak();
-        soryaLeangsak.setLesserEra( LesserEra );
-        soryaLeangsak.setHarkun((292207 * LesserEra + 373) / 800 + 1);
-        soryaLeangsak.setKromathopol(800 - (292207 * LesserEra + 373) % 800 );
-        soryaLeangsak.setAvaman((11 * soryaLeangsak.getHarkun() + 650) % 692);
-        soryaLeangsak.setBodethey( (soryaLeangsak.getHarkun() + ((11 * soryaLeangsak.getHarkun() + 650) / 692)) % 30);
-        return soryaLeangsak;
     }
     /**
      * @return String
      */
     public String calAnimalYear() {
-        return AnimalYear.year[(this.localDate.getYear() + 9) % 12];
+        return ZodiacYear.year[(this.localDate.getYear() + 9) % 12];
     }
 
     /**
