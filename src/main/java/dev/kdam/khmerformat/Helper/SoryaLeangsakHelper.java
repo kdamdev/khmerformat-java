@@ -7,8 +7,10 @@ import dev.kdam.khmerformat.Entity.SoryaLeangsak;
  */
 public class SoryaLeangsakHelper {
     private final SoryaLeangsak lesserEra;
+    private final int year;
     public SoryaLeangsakHelper(int year) {
         this.lesserEra = getSoryaLeangsakByLesserEra( year + 544 - 1182  );
+        this.year = year;
     }
     public boolean is366KhmerSolar() {
         return lesserEra.getKromathopol() <= 207;
@@ -31,6 +33,17 @@ public class SoryaLeangsakHelper {
         int nextBodethey = this.getSoryaLeangsakByLesserEra(lesserEra.getLesserEra() + 1).getBodethey();
         return (lesserEra.getBodethey() != 25 || nextBodethey != 5) && ((lesserEra.getBodethey() > 24 || lesserEra.getBodethey() < 6) ||
                 (lesserEra.getBodethey() == 24 && nextBodethey == 6));
+    }
+    public boolean isChes30Days(){
+        if(!this.isAthikmeas()){
+            if(!this.isAthikvearak()){
+                SoryaLeangsakHelper previous_year = new SoryaLeangsakHelper(this.year - 1 );
+                return previous_year.isAthikmeas() && previous_year.isAthikvearak();
+            }else return true;
+        }else {
+            if(this.isAthikvearak()) return false;
+        }
+        return false;
     }
 
     private SoryaLeangsak getSoryaLeangsakByLesserEra(int LesserEra) {
