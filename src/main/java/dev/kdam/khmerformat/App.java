@@ -1,9 +1,7 @@
 package dev.kdam.khmerformat;
 
-import dev.kdam.khmerformat.Utils.KhmerLunarDateTime;
+import dev.kdam.khmerformat.Utils.KhmerLunarDate;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 /**
@@ -23,11 +21,10 @@ public class App
 //        System.out.println( numeric.toKhmerText() );
 //        System.out.println( "-----------------" );
 
-        KhmerLunarDateTime lunar = new KhmerLunarDateTime(5,2,2023);
-        System.out.println(lunar.toString());
-        System.out.println(lunar.mapSolarYearToLunarYear());
-        System.out.println( "-----------------" );
-        System.out.println(Arrays.toString(lunar.mapSolarDayToLunarDay()));
+        KhmerLunarDate lunar = new KhmerLunarDate(5,1,2023);
+        System.out.println(lunar.getDayOfWeek());
+        System.out.println(lunar.getDayOfMonth());
+        System.out.println(lunar.getMonth());
         System.out.println( "+++++++++++++" );
 
     }

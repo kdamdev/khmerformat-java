@@ -6,9 +6,9 @@ import dev.kdam.khmerformat.Entity.SolarDateTime;
 /**
  *
  */
-public class KhmerSolarDateTime {
+public class KhmerSolarDate {
     private final SolarDateTime solar;
-    public KhmerSolarDateTime(int day, int month, int year) {
+    public KhmerSolarDate(int day, int month, int year) {
         this.solar = new SolarDateTime();
 
         this.solar.setDay( new KhmerNumeric(day).toKhmer());
@@ -16,7 +16,7 @@ public class KhmerSolarDateTime {
         this.solar.setYear( new KhmerNumeric(year).toKhmer());
     }
 
-    public KhmerSolarDateTime() {
+    public KhmerSolarDate() {
         this.solar = new SolarDateTime();
     }
 
