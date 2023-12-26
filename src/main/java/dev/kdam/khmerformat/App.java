@@ -21,10 +21,8 @@ public class App
 //        System.out.println( numeric.toKhmerText() );
 //        System.out.println( "-----------------" );
 
-        KhmerLunarDate lunar = new KhmerLunarDate(5,1,2023);
-        System.out.println(lunar.getDayOfWeek());
-        System.out.println(lunar.getDayOfMonth());
-        System.out.println(lunar.getMonth());
+        KhmerLunarDate lunar = new KhmerLunarDate();
+        System.out.println(lunar.toString());
         System.out.println( "+++++++++++++" );
 
     }

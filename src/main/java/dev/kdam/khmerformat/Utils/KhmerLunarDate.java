@@ -5,25 +5,37 @@ import dev.kdam.khmerformat.Helper.SoryaLeangsakHelper;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 
 /**
  * KhmerLunarDate
  */
 public class KhmerLunarDate {
     private final LocalDate localDate;
-    private final String dayOfWeek;
-    private String dayOfMonth;
-    private String month;
-    private String zodiacYear;
-    private String era;
-    private String beYear;
+    private String dayOfWeek = "";
+    private String dayOfMonth = "";
+    private String month = "";
+    private String zodiacYear = "";
+    private String era = "";
+    private String beYear = "";
     public KhmerLunarDate(int day, int month, int year) {
         localDate = LocalDate.of( year, month, day);
-        SoryaLeangsakHelper helper = new SoryaLeangsakHelper(year);
-        this.dayOfWeek = DayOfWeek.day_of_week[localDate.getDayOfWeek().getValue() % 7];
-        int[] dayAndMonth = mapSolarYearToLunarYear(localDate);
-        this.dayOfMonth = getDayOfMonth(dayAndMonth[0]);
-        this.month = LunarMonth.month[dayAndMonth[1]];
+        this.init();
+    }
+    public KhmerLunarDate(){
+        localDate = LocalDate.now();
+        this.init();
+    }
+    public void init(){
+        SoryaLeangsakHelper helper = new SoryaLeangsakHelper(localDate.getYear());
+        this.dayOfWeek      = DayOfWeek.day_of_week[localDate.getDayOfWeek().getValue() % 7];
+        int[] dayAndMonth   = mapSolarYearToLunarYear(localDate);
+        this.dayOfMonth     = getDayOfMonth(dayAndMonth[0]);
+        //this.month          = LunarMonth.month[dayAndMonth[1] - 1];
+        this.zodiacYear     = ZodiacYear.year[(localDate.getYear() + 9) % 12]; //base khmer new year
+        this.era            = Era.sak[(localDate.getYear() + 2) % 10]; //base khmer new year
+        this.beYear         = new KhmerNumeric(localDate.getYear() + (dayAndMonth[0] >= 1 && dayAndMonth[1] >= 5 ? 544 : 543)).toKhmer();
+        System.out.println( Arrays.toString( dayAndMonth ) );
     }
     /**
      *
@@ -36,28 +48,7 @@ public class KhmerLunarDate {
 
     public String getDayOfMonth(int day){
         int t = day % 15 == 0 ? 15 : day % 15;
-        return t + " " + (day > 15 ? JourneyMoon.WANING.getLabel() : JourneyMoon.WAXING.getLabel());
-    }
-    public int[] mapSolarDayToLunarDay() {
-        LocalDate start = LocalDate.of(this.localDate.getYear(), 1, 1);
-        LocalDate current = LocalDate.of(this.localDate.getYear(), this.localDate.getMonth(), this.localDate.getDayOfMonth());
-        long days = ChronoUnit.DAYS.between(start,current) ;//+ this.mapSolarYearToLunarYear();
-        SoryaLeangsakHelper lunarHelper = new SoryaLeangsakHelper(this.localDate.getYear());
-        int tmp_d = 1;
-        int tmp_m = 1;
-
-        for (int month = 1; month < 15; month++) {
-            System.out.println("Days in Month: " + this.getDayInfMonth(month));
-            System.out.println("Days Remain: " + days +",month"+month);
-            tmp_m = month;
-            if(days < this.getDayInfMonth(month)){
-                tmp_d = (int) days;
-                break;
-            }else {
-                days -= this.getDayInfMonth(month);
-            }
-        }
-        return new int[] {tmp_d, tmp_m};
+        return new KhmerNumeric(t).toKhmer() + " " + (day > 15 ? JourneyMoon.WANING.getLabel() : JourneyMoon.WAXING.getLabel());
     }
     public int[] mapSolarYearToLunarYear(LocalDate epochEst) {
         LocalDate epoch = LocalDate.of(1900,1,1);
@@ -74,9 +65,10 @@ public class KhmerLunarDate {
         //calculate day and month
         int tmp_d = 1;
         int tmp_m = 1;
-        for (int m =1; m < 15; m++){
+        for (int m = 1; m < 15; m++){
             tmp_m = m;
-            if(dayBetween < this.getDayInfMonth(m)){
+            int daysOfMonth = this.getDayInfMonth(m);
+            if(dayBetween < daysOfMonth ){
                 tmp_d = (int) dayBetween;
                 break;
             }else {
@@ -89,30 +81,9 @@ public class KhmerLunarDate {
             tmp_d++;
         return new int[] {tmp_d, tmp_m};
     }
-    /**
-     * @return String
-     */
-    public String calAnimalYear() {
-        return ZodiacYear.year[(this.localDate.getYear() + 9) % 12];
-    }
 
-    /**
-     * @return String
-     */
-    public String calEra() {
-        return Era.sak[(this.localDate.getYear() + 2) % 10];
-    }
-
-    /**
-     * @return
-     */
-    private String calDayOfWeek() {
-        return DayOfWeek.day_of_week[0];
-    }
     public String toString() {
-        return "";
-        //int[] daysAndMonth = this.mapSolarDayToLunarDay();
-        //return String.format( "ថ្ងៃ%s %s ខែ%s ឆ្នាំ%s %s ព.ស.%s", this.lunar.getDayOfWeek(), this.getDayOfMonth(daysAndMonth[0]), this.lunar.getDayOfWeek(), this.calAnimalYear(), this.calEra(), this.lunar.getDayOfWeek());
+        return String.format( "ថ្ងៃ%s %s ខែ%s ឆ្នាំ%s %s ព.ស.%s", dayOfWeek, dayOfMonth, month, zodiacYear, era, beYear);
     }
 
     public String getDayOfWeek() {
