@@ -27,13 +27,18 @@ public class SoryaLeangsakHelper {
     }
     /**
      * អធិកមាស បកតិវារៈ ១ឆ្នាំមាន១៣ខែ(អាសាឍ២ដង) = ៣៨៤ថ្ងៃ
-     * @return boolean
+     * @return boolean leap year
      */
     public boolean isAthikmeas(){
         int nextBodethey = this.getSoryaLeangsakByLesserEra(lesserEra.getLesserEra() + 1).getBodethey();
         return (lesserEra.getBodethey() != 25 || nextBodethey != 5) && ((lesserEra.getBodethey() > 24 || lesserEra.getBodethey() < 6) ||
                 (lesserEra.getBodethey() == 24 && nextBodethey == 6));
     }
+
+    /**
+     * ឆ្នាំបកតិមាស អធិកវារៈ ឬ ចន្ទ្រាធិមាស ១ឆ្នាំមាន១២ខែ ដោយខែជេស្ឋមាន៣០ថ្ងៃ = ៣៥៥ថ្ងៃ ។
+     * @return boolean leap month (Ches 30days)
+     */
     public boolean isChes30Days(){
         if(!this.isAthikmeas()){
             if(!this.isAthikvearak()){
