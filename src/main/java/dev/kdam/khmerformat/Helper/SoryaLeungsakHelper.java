@@ -1,14 +1,15 @@
 package dev.kdam.khmerformat.Helper;
 
 import dev.kdam.khmerformat.Entity.SoryaLeangsak;
+import dev.kdam.khmerformat.Enum.DayOfWeek;
 
 /**
  *
  */
-public class SoryaLeangsakHelper {
+public class SoryaLeungsakHelper {
     private final SoryaLeangsak lesserEra;
     private final int year;
-    public SoryaLeangsakHelper(int year) {
+    public SoryaLeungsakHelper(int year) {
         this.lesserEra = getSoryaLeangsakByLesserEra( year + 544 - 1182  );
         this.year = year;
     }
@@ -42,7 +43,7 @@ public class SoryaLeangsakHelper {
     public boolean isChes30Days(){
         if(!this.isAthikmeas()){
             if(!this.isAthikvearak()){
-                SoryaLeangsakHelper previous_year = new SoryaLeangsakHelper(this.year - 1 );
+                SoryaLeungsakHelper previous_year = new SoryaLeungsakHelper(this.year - 1 );
                 return previous_year.isAthikmeas() && previous_year.isAthikvearak();
             }else return true;
         }else {
@@ -50,6 +51,26 @@ public class SoryaLeangsakHelper {
         }
         return false;
     }
+    public String LeungsakDay() {
+        switch (lesserEra.getHarkun() % 7){
+            case 0:
+                return DayOfWeek.day_of_week[6];
+            case 1:
+                return DayOfWeek.day_of_week[0];
+            case 2:
+                return DayOfWeek.day_of_week[1];
+            case 3:
+                return DayOfWeek.day_of_week[2];
+            case 4:
+                return DayOfWeek.day_of_week[3];
+            case 5:
+                return DayOfWeek.day_of_week[4];
+            case 6:
+            default:
+                return DayOfWeek.day_of_week[5];
+        }
+    }
+
 
     private SoryaLeangsak getSoryaLeangsakByLesserEra(int LesserEra) {
         SoryaLeangsak soryaLeangsak = new SoryaLeangsak();
