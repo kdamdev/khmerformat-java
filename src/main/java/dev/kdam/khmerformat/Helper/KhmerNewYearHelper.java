@@ -1,15 +1,16 @@
 package dev.kdam.khmerformat.Helper;
 
+import dev.kdam.khmerformat.Entity.AverageSun;
 import dev.kdam.khmerformat.Entity.SoryaLeangsak;
 import dev.kdam.khmerformat.Enum.DayOfWeek;
 
 /**
  *
  */
-public class SoryaLeungsakHelper {
+public class KhmerNewYearHelper {
     private final SoryaLeangsak lesserEra;
     private final int year;
-    public SoryaLeungsakHelper(int year) {
+    public KhmerNewYearHelper(int year) {
         this.lesserEra = getSoryaLeangsakByLesserEra( year + 544 - 1182  );
         this.year = year;
     }
@@ -43,7 +44,7 @@ public class SoryaLeungsakHelper {
     public boolean isChes30Days(){
         if(!this.isAthikmeas()){
             if(!this.isAthikvearak()){
-                SoryaLeungsakHelper previous_year = new SoryaLeungsakHelper(this.year - 1 );
+                KhmerNewYearHelper previous_year = new KhmerNewYearHelper(this.year - 1 );
                 return previous_year.isAthikmeas() && previous_year.isAthikvearak();
             }else return true;
         }else {
@@ -70,8 +71,18 @@ public class SoryaLeungsakHelper {
                 return DayOfWeek.day_of_week[5];
         }
     }
-
-
+    public AverageSun getAverageOfSun(int sotin) {
+        AverageSun sun = new AverageSun();
+        int pre_kromathopol = getSoryaLeangsakByLesserEra(lesserEra.getLesserEra() - 1).getKromathopol();
+        int tmp = 800 * sotin + pre_kromathopol;
+        sun.setReasey(tmp / 24350);
+        sun.setAngsar((tmp % 24350) / 811);
+        sun.setLibda((((tmp % 24350) % 811) / 14) - 3);
+        return sun;
+    }
+    public String PressureOfSun() {
+        return "";
+    }
     private SoryaLeangsak getSoryaLeangsakByLesserEra(int LesserEra) {
         SoryaLeangsak soryaLeangsak = new SoryaLeangsak();
         soryaLeangsak.setLesserEra( LesserEra );

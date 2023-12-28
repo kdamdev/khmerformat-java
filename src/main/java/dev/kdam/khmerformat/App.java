@@ -19,7 +19,7 @@ public class App
 //        System.out.println( numeric.toKhmerText() );
 //        System.out.println( "-----------------" );
 
-        KhmerLunarDate lunar = new KhmerLunarDate(5, 5,2023 );
+        KhmerLunarDate lunar = new KhmerLunarDate(5, 5,2018 );
         System.out.println(lunar.toString());
         System.out.println( "+++++++++++++" );
 
