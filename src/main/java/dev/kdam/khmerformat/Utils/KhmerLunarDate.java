@@ -37,8 +37,16 @@ public class KhmerLunarDate {
         System.out.println( helper.getAverageOfSun(363).getReasey());
         System.out.println( helper.getAverageOfSun(363).getAngsar());
         System.out.println( helper.getAverageOfSun(363).getLibda());
+        System.out.println( helper.LeungsakDay());
     }
-
+    public int[] getLeungsakDay() {
+        KhmerNewYearHelper old_year = new KhmerNewYearHelper( localDate.getYear() - 1);
+        int bodethey = old_year.getLesserEra().getBodethey();
+        if(old_year.isAthikmeas() && old_year.isAthikvearak()) {
+            bodethey++;
+        }
+        return new int[]{};
+    }
     private String getLunarMonth(int month, boolean isLeapYear) {
         if (isLeapYear && month >= 8) {
             if (month == 8 || month == 9) {

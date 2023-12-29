@@ -4,10 +4,14 @@ import dev.kdam.khmerformat.Entity.AverageSun;
 import dev.kdam.khmerformat.Entity.SoryaLeangsak;
 import dev.kdam.khmerformat.Enum.DayOfWeek;
 
+import java.sql.Array;
+
 /**
  *
  */
 public class KhmerNewYearHelper {
+
+
     private final SoryaLeangsak lesserEra;
     private final int year;
     public KhmerNewYearHelper(int year) {
@@ -52,25 +56,27 @@ public class KhmerNewYearHelper {
         }
         return false;
     }
-    public String LeungsakDay() {
-        switch (lesserEra.getHarkun() % 7){
-            case 0:
-                return DayOfWeek.day_of_week[6];
-            case 1:
-                return DayOfWeek.day_of_week[0];
-            case 2:
-                return DayOfWeek.day_of_week[1];
-            case 3:
-                return DayOfWeek.day_of_week[2];
-            case 4:
-                return DayOfWeek.day_of_week[3];
-            case 5:
-                return DayOfWeek.day_of_week[4];
-            case 6:
-            default:
-                return DayOfWeek.day_of_week[5];
-        }
+    public int LeungsakDay() {
+//        switch (lesserEra.getHarkun() % 7){
+//            case 0:
+//                return DayOfWeek.day_of_week[6];
+//            case 1:
+//                return DayOfWeek.day_of_week[0];
+//            case 2:
+//                return DayOfWeek.day_of_week[1];
+//            case 3:
+//                return DayOfWeek.day_of_week[2];
+//            case 4:
+//                return DayOfWeek.day_of_week[3];
+//            case 5:
+//                return DayOfWeek.day_of_week[4];
+//            case 6:
+//            default:
+//                return DayOfWeek.day_of_week[5];
+//        }
+        return lesserEra.getHarkun() % 7;
     }
+
     public AverageSun getAverageOfSun(int sotin) {
         AverageSun sun = new AverageSun();
         int pre_kromathopol = getSoryaLeangsakByLesserEra(lesserEra.getLesserEra() - 1).getKromathopol();
@@ -81,6 +87,7 @@ public class KhmerNewYearHelper {
         return sun;
     }
     public String PressureOfSun() {
+
         return "";
     }
     private SoryaLeangsak getSoryaLeangsakByLesserEra(int LesserEra) {
@@ -91,5 +98,9 @@ public class KhmerNewYearHelper {
         soryaLeangsak.setAvaman((11 * soryaLeangsak.getHarkun() + 650) % 692);
         soryaLeangsak.setBodethey( (soryaLeangsak.getHarkun() + ((11 * soryaLeangsak.getHarkun() + 650) / 692)) % 30);
         return soryaLeangsak;
+    }
+
+    public SoryaLeangsak getLesserEra() {
+        return lesserEra;
     }
 }
