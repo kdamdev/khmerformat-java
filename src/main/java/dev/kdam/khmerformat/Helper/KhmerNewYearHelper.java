@@ -76,7 +76,17 @@ public class KhmerNewYearHelper {
 //        }
         return lesserEra.getHarkun() % 7;
     }
-
+    /**
+     * @return day and month of leung sak
+     */
+    public int[] getLeungsakDay() {
+        KhmerNewYearHelper old_year = new KhmerNewYearHelper( this.year - 1);
+        int bodethey = this.lesserEra.getBodethey();
+        if(old_year.isAthikmeas() && old_year.isAthikvearak()) {
+            ++bodethey;
+        }
+        return new int[] {bodethey >= 6 ? bodethey : ++bodethey, bodethey >= 6 ? 5 : 6};
+    }
     public AverageSun getAverageOfSun(int sotin) {
         AverageSun sun = new AverageSun();
         int pre_kromathopol = getSoryaLeangsakByLesserEra(lesserEra.getLesserEra() - 1).getKromathopol();

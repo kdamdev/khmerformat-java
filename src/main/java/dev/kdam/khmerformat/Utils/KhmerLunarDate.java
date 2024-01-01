@@ -3,8 +3,10 @@ package dev.kdam.khmerformat.Utils;
 import dev.kdam.khmerformat.Enum.*;
 import dev.kdam.khmerformat.Helper.KhmerNewYearHelper;
 
+import javax.swing.plaf.IconUIResource;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 
 /**
  * KhmerLunarDate
@@ -26,26 +28,22 @@ public class KhmerLunarDate {
         this.init();
     }
     public void init(){
-        KhmerNewYearHelper helper = new KhmerNewYearHelper( localDate.getYear() );
-        this.dayOfWeek      = DayOfWeek.day_of_week[localDate.getDayOfWeek().getValue() % 7];
-        int[] dayAndMonth   = mapSolarYearToLunarYear(localDate, helper );
-        this.dayOfMonth     = getLunarDayOfMonth(dayAndMonth[0]);
-        this.month          = getLunarMonth(dayAndMonth[1], helper.isAthikmeas());
-        this.zodiacYear     = ZodiacYear.year[(localDate.getYear() + 9) % 12]; // base khmer new year
-        this.era            = Era.sak[(localDate.getYear() + 2) % 10]; // base khmer new year
-        this.beYear         = new KhmerNumeric(localDate.getYear() + (dayAndMonth[1] > 6 || (dayAndMonth[1] == 6 && dayAndMonth[0] > 15) ? 544 : 543)).toKhmer();
+        KhmerNewYearHelper helper   = new KhmerNewYearHelper( localDate.getYear() );
+        this.dayOfWeek              = DayOfWeek.day_of_week[localDate.getDayOfWeek().getValue() % 7];
+        int[] dayAndMonth           = mapSolarYearToLunarYear(localDate, helper );
+        this.dayOfMonth             = getLunarDayOfMonth(dayAndMonth[0]);
+        this.month                  = getLunarMonth(dayAndMonth[1], helper.isAthikmeas());
+        this.zodiacYear             = ZodiacYear.year[(localDate.getYear() + 9) % 12]; // base khmer new year
+        this.era                    = Era.sak[(localDate.getYear() + 2) % 10]; // base khmer new year
+        this.beYear                 = new KhmerNumeric(calBeYear(dayAndMonth)).toKhmer();
+        //
         System.out.println( helper.getAverageOfSun(363).getReasey());
         System.out.println( helper.getAverageOfSun(363).getAngsar());
         System.out.println( helper.getAverageOfSun(363).getLibda());
-        System.out.println( helper.LeungsakDay());
+        System.out.println(Arrays.toString(helper.getLeungsakDay()));
     }
-    public int[] getLeungsakDay() {
-        KhmerNewYearHelper old_year = new KhmerNewYearHelper( localDate.getYear() - 1);
-        int bodethey = old_year.getLesserEra().getBodethey();
-        if(old_year.isAthikmeas() && old_year.isAthikvearak()) {
-            bodethey++;
-        }
-        return new int[]{};
+    private int calBeYear(int[] dayAndMonth) {
+        return localDate.getYear() + (dayAndMonth[1] > 6 || (dayAndMonth[1] == 6 && dayAndMonth[0] > 15) ? 544 : 543);
     }
     private String getLunarMonth(int month, boolean isLeapYear) {
         if (isLeapYear && month >= 8) {
@@ -90,7 +88,6 @@ public class KhmerLunarDate {
         for (int epoch_year = epoch.getYear(); epoch_year < epochEst.getYear(); epoch_year++){
             dayBetween -= getDayInYear(new KhmerNewYearHelper(epoch_year));
         }
-        System.out.println("Remain Days: " + dayBetween);
         //calculate day and month
         int tmp_d = 1;
         int tmp_m = 1;
