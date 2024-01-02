@@ -3,10 +3,16 @@ package dev.kdam.khmerformat.Entity;
 /**
  * AverageSun
  */
-public class AverageSun {
+public class Sun {
     private int reasey;
     private int angsar;
     private int libda; // equal to one minute
+    public Sun() {}
+    public Sun(int reasey, int angsar, int libda) {
+        this.reasey = reasey;
+        this.angsar = angsar;
+        this.libda = libda;
+    }
 
     public int getReasey() {
         return reasey;

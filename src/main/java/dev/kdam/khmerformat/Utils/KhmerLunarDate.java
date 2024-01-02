@@ -32,8 +32,8 @@ public class KhmerLunarDate {
         int[] dayAndMonth           = mapSolarYearToLunarYear(localDate, helper );
         this.dayOfMonth             = getLunarDayOfMonth(dayAndMonth[0]);
         this.month                  = getLunarMonth(dayAndMonth[1], helper.isAthikmeas());
-        this.zodiacYear             = ZodiacYear.year[(localDate.getYear() + 9) % 12]; // base khmer new year
-        this.era                    = findEra(helper.getLeungsakDay(), dayAndMonth); // base khmer new year
+        this.zodiacYear             = findZodiacYear(localDate.getYear());
+        this.era                    = findEra(helper.getLeungsakDay(), dayAndMonth);
         this.beYear                 = new KhmerNumeric( findBeYear(dayAndMonth)).toKhmer();
         //
 //        System.out.println( helper.getAverageOfSun(363).getReasey());
@@ -41,7 +41,9 @@ public class KhmerLunarDate {
 //        System.out.println( helper.getAverageOfSun(363).getLibda());
        // System.out.println(Arrays.toString(helper.getLeungsakDay()));
     }
-
+    private String findZodiacYear(int year) {
+        return ZodiacYear.year[(year + 9) % 12];
+    }
     /**
      * find Buddhist Year base on Visak Bochea
      * @param dayAndMonth
