@@ -3,7 +3,6 @@ package dev.kdam.khmerformat.Utils;
 import dev.kdam.khmerformat.Enum.*;
 import dev.kdam.khmerformat.Helper.KhmerNewYearHelper;
 
-import javax.swing.plaf.IconUIResource;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
@@ -34,16 +33,32 @@ public class KhmerLunarDate {
         this.dayOfMonth             = getLunarDayOfMonth(dayAndMonth[0]);
         this.month                  = getLunarMonth(dayAndMonth[1], helper.isAthikmeas());
         this.zodiacYear             = ZodiacYear.year[(localDate.getYear() + 9) % 12]; // base khmer new year
-        this.era                    = Era.sak[(localDate.getYear() + 2) % 10]; // base khmer new year
-        this.beYear                 = new KhmerNumeric(calBeYear(dayAndMonth)).toKhmer();
+        this.era                    = findEra(helper.getLeungsakDay(), dayAndMonth); // base khmer new year
+        this.beYear                 = new KhmerNumeric( findBeYear(dayAndMonth)).toKhmer();
         //
-        System.out.println( helper.getAverageOfSun(363).getReasey());
-        System.out.println( helper.getAverageOfSun(363).getAngsar());
-        System.out.println( helper.getAverageOfSun(363).getLibda());
-        System.out.println(Arrays.toString(helper.getLeungsakDay()));
+//        System.out.println( helper.getAverageOfSun(363).getReasey());
+//        System.out.println( helper.getAverageOfSun(363).getAngsar());
+//        System.out.println( helper.getAverageOfSun(363).getLibda());
+       // System.out.println(Arrays.toString(helper.getLeungsakDay()));
     }
-    private int calBeYear(int[] dayAndMonth) {
-        return localDate.getYear() + (dayAndMonth[1] > 6 || (dayAndMonth[1] == 6 && dayAndMonth[0] > 15) ? 544 : 543);
+
+    /**
+     * find Buddhist Year base on Visak Bochea
+     * @param dayAndMonth
+     * @return
+     */
+    private int findBeYear(int[] dayAndMonth) {
+        return localDate.getYear() + (dayAndMonth[1] > 6 || (dayAndMonth[1] == 6 && dayAndMonth[0] >= 16) ? 544 : 543);
+    }
+
+    /**
+     * find ERA base on day of leung sak
+     * @param leungSak
+     * @param currentDate
+     * @return string
+     */
+    private String findEra(int[] leungSak, int[] currentDate) {
+        return Era.sak[currentDate[1] > leungSak[1] || (currentDate[0] >= leungSak[0] && currentDate[1] == leungSak[1]) ? (localDate.getYear() + 2) % 10 : (localDate.getYear() + 1) % 10];
     }
     private String getLunarMonth(int month, boolean isLeapYear) {
         if (isLeapYear && month >= 8) {
