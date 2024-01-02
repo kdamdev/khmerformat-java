@@ -9,16 +9,17 @@ import java.util.Arrays;
  *
  */
 public class KhmerNewYearHelper {
-
-
     private final SoryaLeangsak lesserEra;
     private final int year;
     public KhmerNewYearHelper(int year) {
         this.lesserEra = getSoryaLeangsakByLesserEra( year + 544 - 1182  );
         this.year = year;
-        System.out.println(PressureOfSun(new Sun(11,28,26)).getReasey());
-        System.out.println(PressureOfSun(new Sun(11,28,26)).getAngsar());
-        System.out.println(PressureOfSun(new Sun(11,28,26)).getLibda());
+        Sun info = getPressureOfSun(getAverageOfSun(363));
+        System.out.println( "+++++++++++++" + year);
+        System.out.println(info.getReasey());
+        System.out.println(info.getAngsar());
+        System.out.println(info.getLibda());
+        System.out.println( "*************" );
     }
     public boolean is366KhmerSolar() {
         return lesserEra.getKromathopol() <= 207;
@@ -101,9 +102,10 @@ public class KhmerNewYearHelper {
 
     /**
      * មធ្យមព្រះអាទិត្យ ដក R2.A20.L0
+     * @param averageSun 
      * @return
      */
-    public Sun PressureOfSun(Sun averageSun) {
+    public Sun getPressureOfSun(Sun averageSun) {
         Sun s1 = new Sun();
         s1.setReasey( averageSun.getReasey() < 2 ? averageSun.getReasey() + 12 - 2 : averageSun.getReasey() - 2);
         s1.setAngsar( averageSun.getAngsar() - 20);
@@ -146,39 +148,51 @@ public class KhmerNewYearHelper {
         }
 
         Sun phol = calPhol( s2 );
-        System.out.println("Avg: "+averageSun.getReasey());
-        System.out.println("Avg: "+averageSun.getAngsar());
-        System.out.println("Avg: "+averageSun.getLibda());
-
-        System.out.println("Phol: "+phol.getReasey());
-        System.out.println("Phol: "+phol.getAngsar());
-        System.out.println("Phol: "+phol.getLibda());
-        Sun preSun = new Sun();
+        Sun preSun;
         if(s1.getReasey() >= 6) {
-            preSun.setReasey(averageSun.getReasey() + phol.getReasey());
-            preSun.setAngsar(averageSun.getAngsar() + phol.getAngsar());
-            preSun.setLibda(averageSun.getLibda() + phol.getLibda());
+            preSun = new Sun(
+                    averageSun.getReasey() + phol.getReasey(),
+                    averageSun.getAngsar() + phol.getAngsar(),
+                    averageSun.getLibda() + phol.getLibda());
         }else {
-            preSun.setReasey(averageSun.getReasey() - phol.getReasey());
-            preSun.setAngsar(averageSun.getAngsar() - phol.getAngsar());
-            preSun.setLibda(averageSun.getLibda() - phol.getLibda());
+            preSun = new Sun(
+                    averageSun.getReasey() - phol.getReasey(),
+                    averageSun.getAngsar() - phol.getAngsar(),
+                    averageSun.getLibda() - phol.getLibda());
         }
-        return preSun;
+        return convertToReasey(preSun);
     }
-    private int calkhan(Sun sun) {
+
+    /**
+     * ១រាសី = ៣០អង្សា, ១អង្សា = ៦០លិប្ដា
+     * @param sun
+     * @return
+     */
+    private static Sun convertToReasey(Sun sun) {
+        int l = sun.getLibda() / 60;
+        int rl = sun.getLibda() % 60;
+
+        int a = (sun.getAngsar() + l) / 30;
+        int ra = (sun.getAngsar() + l) % 30;
+
+        int r = (sun.getReasey() + a) % 12;
+
+        return new Sun(r,ra,rl);
+    };
+    private static int calkhan(Sun sun) {
         return sun.getAngsar() >= 15 ? 2 * sun.getReasey() + 1 : 2 * sun.getReasey();
     }
-    private int calPouichalip(Sun sun) {
+    private static int calPouichalip(Sun sun) {
         return sun.getAngsar() >= 15 ? 60 * (sun.getAngsar() - 15) + sun.getLibda(): 60 * sun.getAngsar() + sun.getLibda();
     }
-    private Sun calPhol(Sun info) {
+    private static Sun calPhol(Sun info) {
         int k = calkhan(info);
         int p = calPouichalip(info);
         int[] chaya = getSunChaya( k );
         int q1 = (p * chaya[1]) / 900 ;
         return new Sun(0, (q1 + chaya[2]) / 60, (q1 + chaya[2]) % 60);
     }
-    private int[] getSunChaya(int khan) {
+    private static int[] getSunChaya(int khan) {
         switch (khan){
             case 0:
                 return new int[] {0, 35, 0};
