@@ -9,7 +9,6 @@ import dev.kdam.khmerformat.utils.KhmerLunarDate;
 public class App 
 {
     public static void main( String[] args ) {
-//        System.out.println( "Hello World!" );
 //        KhmerSolarDateTime solar = new KhmerSolarDateTime(01,12,2023);
 //        System.out.println( solar.toString());
 //        System.out.println( "-----------------" );
@@ -19,7 +18,7 @@ public class App
 //        System.out.println( numeric.toKhmerText() );
 //        System.out.println( "-----------------" );
 
-        KhmerLunarDate lunar = new KhmerLunarDate(13, 4,2018 );
+        KhmerLunarDate lunar = new KhmerLunarDate(16, 4,2024 );
         System.out.println(lunar.toString());
         System.out.println( "+++++++++++++" );
 

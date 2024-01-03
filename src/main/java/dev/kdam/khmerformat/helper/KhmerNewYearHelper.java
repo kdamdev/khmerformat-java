@@ -22,9 +22,6 @@ public class KhmerNewYearHelper {
     public boolean is366KhmerSolar() {
         return lesserEra.getKromathopol() <= 207;
     }
-    public static boolean isLeapYear(int year) {
-        return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
-    }
     /**
      * ឆ្នាំបកតិមាស អធិកវារៈ ឬ ចន្ទ្រាធិមាស ១ឆ្នាំមាន១២ខែ ដោយខែជេស្ឋមាន៣០ថ្ងៃ
      * @return boolean
@@ -221,8 +218,6 @@ public class KhmerNewYearHelper {
      * @return
      */
     public int[] getNewYearDay() {
-        System.out.println();
-        System.out.println( Arrays.toString( getLeungsakDay() ) );
         int[] leungSak = getLeungsakDay();
 
         for (int i = 1; i <= getNumberOfVanabatDay().getNumberOfVanabat() + 1; i++) {

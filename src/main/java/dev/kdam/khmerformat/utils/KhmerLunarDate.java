@@ -27,19 +27,19 @@ public class KhmerLunarDate {
         this.init();
     }
     public void init(){
-        KhmerNewYearHelper helper   = new KhmerNewYearHelper( localDate.getYear() );
+        KhmerNewYearHelper helper   = new KhmerNewYearHelper(localDate.getYear());
         this.dayOfWeek              = DayOfWeek.day_of_week[localDate.getDayOfWeek().getValue() % 7];
         int[] dayAndMonth           = mapSolarYearToLunarYear(localDate, helper );
+
         this.dayOfMonth             = getLunarDayOfMonth(dayAndMonth[0]);
         this.month                  = getLunarMonth(dayAndMonth[1], helper.isAthikmeas());
-        this.zodiacYear             = findZodiacYear(localDate.getYear());
+        this.zodiacYear             = findZodiacYear(helper.getNewYearDay(), dayAndMonth, localDate.getYear());
         this.era                    = findEra(helper.getLeungsakDay(), dayAndMonth);
-        this.beYear                 = new KhmerNumeric( findBeYear(dayAndMonth)).toKhmer();
-        System.out.println( getLunarMonth(helper.getNewYearDay()[1], helper.isAthikmeas()) );
-        System.out.println( getLunarDayOfMonth(helper.getNewYearDay()[0]) );
+        this.beYear                 = new KhmerNumeric(findBeYear(dayAndMonth)).toKhmer();
+        System.out.println(Arrays.toString(helper.getKhmerNewYearTime()));
     }
-    private String findZodiacYear(int year) {
-        return ZodiacYear.year[(year + 9) % 12];
+    private String findZodiacYear(int[] newYearDay, int[] currentDay, int year) {
+        return currentDay[0] >= newYearDay[0] && currentDay[1] >= newYearDay[1] ? ZodiacYear.year[((year + 9) % 12) - 1] : ZodiacYear.year[((year + 8) % 12) - 1];
     }
     /**
      * find Buddhist Year base on Visak Bochea
@@ -75,7 +75,7 @@ public class KhmerLunarDate {
      * @param month
      * @return 29 for odd month or 30 even month, if 13th month return 30
      */
-    public int getDayInMonth(int month, KhmerNewYearHelper leangsakHelper){
+    private int getDayInMonth(int month, KhmerNewYearHelper leangsakHelper){
         if (leangsakHelper.isAthikmeas() && month >= 8) {
             if (month == 8 || month == 9) {
                 return 30;
@@ -88,17 +88,17 @@ public class KhmerLunarDate {
         }
         return month % 2 == 0 ? 30 : 29;
     }
-    public int getDayInYear(KhmerNewYearHelper soryaLeungsakHelper) {
+    private int getDayInYear(KhmerNewYearHelper soryaLeungsakHelper) {
         return soryaLeungsakHelper.isAthikmeas() ? 384 : soryaLeungsakHelper.isChes30Days() ? 355 : 354;
     }
 
-    public String getLunarDayOfMonth(int day) {
+    private String getLunarDayOfMonth(int day) {
         int t = day % 15 == 0 ? 15 : day % 15;
         //System.out.println("getLunarDayOfMonth=>" + day);
         //new KhmerNumeric(t).toKhmer() +
         return new KhmerNumeric(t).toKhmer() + " " + (day > 15 ? JourneyMoon.WANING.getLabel() : JourneyMoon.WAXING.getLabel());
     }
-    public int[] mapSolarYearToLunarYear(LocalDate epochEst, KhmerNewYearHelper leangsakHelper) {
+    private int[] mapSolarYearToLunarYear(LocalDate epochEst, KhmerNewYearHelper leangsakHelper) {
         LocalDate epoch = LocalDate.of(1900,1,1);
         long dayBetween = ChronoUnit.DAYS.between(epoch,epochEst) + 1;
         for (int epoch_year = epoch.getYear(); epoch_year < epochEst.getYear(); epoch_year++){
