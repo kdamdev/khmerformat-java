@@ -1,4 +1,4 @@
-package dev.kdam.khmerformat.Entity;
+package dev.kdam.khmerformat.entity;
 
 /**
  * LunarDateTime

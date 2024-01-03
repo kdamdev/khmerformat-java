@@ -1,6 +1,6 @@
 package dev.kdam.khmerformat;
 
-import dev.kdam.khmerformat.Utils.KhmerLunarDate;
+import dev.kdam.khmerformat.utils.KhmerLunarDate;
 
 /**
  *
@@ -19,7 +19,7 @@ public class App
 //        System.out.println( numeric.toKhmerText() );
 //        System.out.println( "-----------------" );
 
-        KhmerLunarDate lunar = new KhmerLunarDate(13, 4,2016 );
+        KhmerLunarDate lunar = new KhmerLunarDate(13, 4,2018 );
         System.out.println(lunar.toString());
         System.out.println( "+++++++++++++" );
 

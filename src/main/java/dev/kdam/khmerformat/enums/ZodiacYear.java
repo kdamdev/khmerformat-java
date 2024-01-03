@@ -1,4 +1,4 @@
-package dev.kdam.khmerformat.Enum;
+package dev.kdam.khmerformat.enums;
 
 public class ZodiacYear {
     public static String[] year = { "", "ជូត", "ឆ្លូវ", "ខាល", "ថោះ", "រោង", "ម្សាញ់", "មមី", "មមែ", "វក", "រកា", "ច", "កុរ" };

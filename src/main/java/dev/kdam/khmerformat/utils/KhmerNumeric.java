@@ -1,7 +1,7 @@
-package dev.kdam.khmerformat.Utils;
+package dev.kdam.khmerformat.utils;
 
-import dev.kdam.khmerformat.Enum.Numeric;
-import dev.kdam.khmerformat.Enum.NumericText;
+import dev.kdam.khmerformat.enums.Numeric;
+import dev.kdam.khmerformat.enums.NumericText;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -30,7 +30,7 @@ public class KhmerNumeric {
      * @return String
      */
     public String toKhmer(){
-        return  Arrays.stream(this.number.toString().split( "" )).map( x-> x.indexOf( '.' ) != -1 ? x : Numeric.num[Integer.parseInt( x )]
+        return  Arrays.stream( this.number.split( "" )).map( x-> x.indexOf( '.' ) != -1 ? x : Numeric.num[Integer.parseInt( x )]
         ).collect( Collectors.joining("") );
     }
 

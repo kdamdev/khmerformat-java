@@ -1,7 +1,7 @@
-package dev.kdam.khmerformat.Utils;
+package dev.kdam.khmerformat.utils;
 
-import dev.kdam.khmerformat.Enum.*;
-import dev.kdam.khmerformat.Helper.KhmerNewYearHelper;
+import dev.kdam.khmerformat.enums.*;
+import dev.kdam.khmerformat.helper.KhmerNewYearHelper;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -35,11 +35,8 @@ public class KhmerLunarDate {
         this.zodiacYear             = findZodiacYear(localDate.getYear());
         this.era                    = findEra(helper.getLeungsakDay(), dayAndMonth);
         this.beYear                 = new KhmerNumeric( findBeYear(dayAndMonth)).toKhmer();
-        //
-//        System.out.println( helper.getAverageOfSun(363).getReasey());
-//        System.out.println( helper.getAverageOfSun(363).getAngsar());
-//        System.out.println( helper.getAverageOfSun(363).getLibda());
-       // System.out.println(Arrays.toString(helper.getLeungsakDay()));
+        System.out.println( getLunarMonth(helper.getNewYearDay()[1], helper.isAthikmeas()) );
+        System.out.println( getLunarDayOfMonth(helper.getNewYearDay()[0]) );
     }
     private String findZodiacYear(int year) {
         return ZodiacYear.year[(year + 9) % 12];
@@ -97,6 +94,8 @@ public class KhmerLunarDate {
 
     public String getLunarDayOfMonth(int day) {
         int t = day % 15 == 0 ? 15 : day % 15;
+        //System.out.println("getLunarDayOfMonth=>" + day);
+        //new KhmerNumeric(t).toKhmer() +
         return new KhmerNumeric(t).toKhmer() + " " + (day > 15 ? JourneyMoon.WANING.getLabel() : JourneyMoon.WAXING.getLabel());
     }
     public int[] mapSolarYearToLunarYear(LocalDate epochEst, KhmerNewYearHelper leangsakHelper) {
