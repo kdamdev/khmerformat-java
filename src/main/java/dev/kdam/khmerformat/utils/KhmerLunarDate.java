@@ -65,11 +65,11 @@ public class KhmerLunarDate {
         if (isLeapYear && month >= 8) {
             if (month == 8 || month == 9) {
                 return LunarMonth.leapYearMonth[month - 8];
-            } else {
-                return LunarMonth.month[month - 2];
+            }else {
+                month -= 1;
             }
         }
-        return LunarMonth.month[--month];
+        return LunarMonth.month[month == 13 ? 0 : month - 1];
     }
 
     /**
@@ -77,16 +77,16 @@ public class KhmerLunarDate {
      * @param month
      * @return 29 for odd month or 30 even month, if 13th month return 30
      */
-    private int getDayInMonth(int month, KhmerNewYearHelper leangsakHelper){
-        if (leangsakHelper.isAthikmeas() && month >= 8) {
+    private int getDayInMonth(int month, KhmerNewYearHelper helper){
+        if (helper.isAthikmeas() && month >= 8) {
             if (month == 8 || month == 9) {
                 return 30;
             } else {
-                month -= 2;
+                month -= 1;
             }
         }
         else {
-            if (leangsakHelper.isChes30Days()) return 30;
+            if (helper.isChes30Days()) return 30;
         }
         return month % 2 == 0 ? 30 : 29;
     }
@@ -102,27 +102,25 @@ public class KhmerLunarDate {
     }
     private int[] mapSolarYearToLunarYear(LocalDate epochEst, KhmerNewYearHelper helper) {
         LocalDate epoch = LocalDate.of(2014,1,1); // ១កើត ខែបុស្ស
-        long dayBetween = ChronoUnit.DAYS.between(epoch, epochEst) + 1;
         int tmp_year = epoch.getYear();
 
         int tmp_d = 1;
         int tmp_m = 1;
         if(epochEst.isAfter(epoch)) {
+            long dayBetween = ChronoUnit.DAYS.between(epoch, epochEst) + 1;
             int totalDayYear =  getDayInYear(new KhmerNewYearHelper(tmp_year));
-            System.out.println("totalDayYear" + totalDayYear );
-            System.out.println("dayBetween" + dayBetween );
             while ( dayBetween > totalDayYear) {
                 dayBetween -= totalDayYear;
                 tmp_year++;
                 totalDayYear = getDayInYear(new KhmerNewYearHelper(tmp_year));
-                System.out.println("year: " + tmp_year + ",totalDayYear: " + totalDayYear );
-                System.out.println("R dayBetween: " + dayBetween );
             }
+            tmp_d = (int) dayBetween;
         }else{
-
+            long dayBetween = ChronoUnit.DAYS.between(epoch, epochEst) - 1;
             //int totalDayYear = getDayInYear(new KhmerNewYearHelper(year));
-            //System.out.println("totalDayYear" + totalDayYear );
-            //System.out.println("dayBetween" + dayBetween );
+
+            System.out.println("dayBetween" + dayBetween );
+
             while (dayBetween < 0) {
                 tmp_year--;
                 int totalDayYear = getDayInYear(new KhmerNewYearHelper(tmp_year));
@@ -137,20 +135,19 @@ public class KhmerLunarDate {
 
         //System.out.println("dayBetween" + dayBetween);
         //cal day
-        if(dayBetween > 0) {
-            for (int m = 2; m <= 14; m++) { //ចន្ទគតិខែទី១ គឺ មិគសិរ=ធ្នូ, បុស្ស=មករា
-                tmp_m = m;
+        if(tmp_d > 0) {
+            for (int m = 2; m <= 14; m++) { // ចន្ទគតិ ខែទី២ បុស្ស=មករា
+                tmp_m = m; // ខែទី១ មិគសិរ=ធ្នូ,
                 int daysOfMonth = getDayInMonth(m, new KhmerNewYearHelper( tmp_year ));
-                System.out.println(m +"->"+ daysOfMonth + ",," + tmp_year);
-                if(dayBetween <= daysOfMonth ) {
-                    tmp_d = (int) dayBetween;
+                if(tmp_d <= daysOfMonth ) {
+                    //tmp_d = (int) dayBetween;
                     break;
                 }else {
-                    dayBetween -= daysOfMonth;
+                    tmp_d -= daysOfMonth;
                 }
             }
         }
-        System.out.println(tmp_d +"---"+ tmp_m);
+        System.out.println("tmp_m: " + tmp_m);
         return new int[] {tmp_d, tmp_m};
     }
 
