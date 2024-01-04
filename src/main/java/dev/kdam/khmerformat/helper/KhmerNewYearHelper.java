@@ -13,33 +13,33 @@ import java.util.List;
  *
  */
 public class KhmerNewYearHelper {
-    private final SoryaLeangsak lesserEra;
+    private final SoryaLeangsak soryaLeangsak;
     private final int year;
     public KhmerNewYearHelper(int year) {
-        this.lesserEra = getSoryaLeangsakByLesserEra( year + 544 - 1182 );
+        this.soryaLeangsak = getSoryaLeangsakByLesserEra( year + 544 - 1182 );
         this.year = year;
     }
-    public boolean is366KhmerSolar() {
-        return lesserEra.getKromathopol() <= 207;
+    public boolean is366KhmerSolar(int kromathopol) {
+        return kromathopol <= 207;
     }
     /**
      * ឆ្នាំបកតិមាស អធិកវារៈ ឬ ចន្ទ្រាធិមាស ១ឆ្នាំមាន១២ខែ ដោយខែជេស្ឋមាន៣០ថ្ងៃ
      * @return boolean
      */
     public boolean isAthikvearak() {
-        int nextAvaman = this.getSoryaLeangsakByLesserEra(lesserEra.getLesserEra() + 1).getAvaman();
-        return (this.is366KhmerSolar() && lesserEra.getAvaman() < 127) ||
-                ((lesserEra.getAvaman() != 137 || nextAvaman != 0 ) &&
-                        lesserEra.getAvaman() < 138) ;
+        int nextAvaman = this.getSoryaLeangsakByLesserEra( soryaLeangsak.getLesserEra() + 1).getAvaman();
+        return (this.is366KhmerSolar( soryaLeangsak.getKromathopol() ) && soryaLeangsak.getAvaman() < 127) ||
+                ((soryaLeangsak.getAvaman() != 137 || nextAvaman != 0 ) &&
+                        soryaLeangsak.getAvaman() < 138) ;
     }
     /**
      * អធិកមាស បកតិវារៈ ១ឆ្នាំមាន១៣ខែ(អាសាឍ២ដង) = ៣៨៤ថ្ងៃ
      * @return boolean leap year
      */
     public boolean isAthikmeas(){
-        int nextBodethey = this.getSoryaLeangsakByLesserEra(lesserEra.getLesserEra() + 1).getBodethey();
-        return (lesserEra.getBodethey() != 25 || nextBodethey != 5) && ((lesserEra.getBodethey() > 24 || lesserEra.getBodethey() < 6) ||
-                (lesserEra.getBodethey() == 24 && nextBodethey == 6));
+        int nextBodethey = this.getSoryaLeangsakByLesserEra( soryaLeangsak.getLesserEra() + 1).getBodethey();
+        return (soryaLeangsak.getBodethey() != 25 || nextBodethey != 5) && ((soryaLeangsak.getBodethey() > 24 || soryaLeangsak.getBodethey() < 6) ||
+                (soryaLeangsak.getBodethey() == 24 && nextBodethey == 6));
     }
 
     /**
@@ -57,32 +57,12 @@ public class KhmerNewYearHelper {
         }
         return false;
     }
-    public int LeungsakDay() {
-//        switch (lesserEra.getHarkun() % 7){
-//            case 0:
-//                return DayOfWeek.day_of_week[6];
-//            case 1:
-//                return DayOfWeek.day_of_week[0];
-//            case 2:
-//                return DayOfWeek.day_of_week[1];
-//            case 3:
-//                return DayOfWeek.day_of_week[2];
-//            case 4:
-//                return DayOfWeek.day_of_week[3];
-//            case 5:
-//                return DayOfWeek.day_of_week[4];
-//            case 6:
-//            default:
-//                return DayOfWeek.day_of_week[5];
-//        }
-        return lesserEra.getHarkun() % 7;
-    }
     /**
      * @return day and month of leung sak
      */
     public int[] getLeungsakDay() {
         KhmerNewYearHelper old_year = new KhmerNewYearHelper(this.year - 1);
-        int bodethey = this.lesserEra.getBodethey();
+        int bodethey = this.soryaLeangsak.getBodethey();
         if(old_year.isAthikmeas() && old_year.isAthikvearak()) {
             ++bodethey;
         }
@@ -90,7 +70,7 @@ public class KhmerNewYearHelper {
     }
     private Sun getAverageOfSun(int sotin) {
         Sun sun = new Sun();
-        int pre_kromathopol = getSoryaLeangsakByLesserEra(lesserEra.getLesserEra() - 1).getKromathopol();
+        int pre_kromathopol = getSoryaLeangsakByLesserEra( soryaLeangsak.getLesserEra() - 1).getKromathopol();
         int tmp = 800 * sotin + pre_kromathopol;
         sun.setReasey(tmp / 24350);
         sun.setAngsar((tmp % 24350) / 811);
@@ -191,14 +171,15 @@ public class KhmerNewYearHelper {
         return new Sun(0, (q1 + chaya[2]) / 60, (q1 + chaya[2]) % 60);
     }
     private VanabatDay getNumberOfVanabatDay() {
-        List<Integer> sotin = is366KhmerSolar() ?
+        int kr = getSoryaLeangsakByLesserEra( soryaLeangsak.getLesserEra() - 1).getKromathopol();
+        List<Integer> sotin = is366KhmerSolar(kr)  ?
                 new ArrayList<>( Arrays.asList(363, 364, 365, 366)) :
                 new ArrayList<>(Arrays.asList(362, 363, 364, 365));
         VanabatDay vanabatDay = new VanabatDay();
         for (int i : sotin) {
             Sun pressureOfSun = getPressureOfSun(getAverageOfSun( i ));
             if (pressureOfSun.getReasey() == 0 && pressureOfSun.getAngsar() == 0) {
-                vanabatDay.setNumberOfVanabat(is366KhmerSolar() ? 365 - i : 364 - i);
+                vanabatDay.setNumberOfVanabat(is366KhmerSolar(kr) ? 365 - i : 364 - i);
                 vanabatDay.setPressureOfSun(pressureOfSun);
                 break;
             }
@@ -223,7 +204,7 @@ public class KhmerNewYearHelper {
         for (int i = 1; i <= getNumberOfVanabatDay().getNumberOfVanabat() + 1; i++) {
             leungSak[0]--;
             if (leungSak[0] == 0 ) {
-                leungSak[0] = 29; // ដោយយើងដឹងថាខែ ចេត្រ មាន ២៩ថ្ងៃ
+                leungSak[0] = 29; // ដោយយើងដឹងថាខែចេត្រ មាន ២៩ថ្ងៃ
                 leungSak[1]--;
             }
         }

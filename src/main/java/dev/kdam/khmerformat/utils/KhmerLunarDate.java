@@ -36,7 +36,9 @@ public class KhmerLunarDate {
         this.zodiacYear             = findZodiacYear(helper.getNewYearDay(), dayAndMonth, localDate.getYear());
         this.era                    = findEra(helper.getLeungsakDay(), dayAndMonth);
         this.beYear                 = new KhmerNumeric(findBeYear(dayAndMonth)).toKhmer();
+        System.out.println(Arrays.toString(helper.getNewYearDay()));
         System.out.println(Arrays.toString(helper.getKhmerNewYearTime()));
+        System.out.println(Arrays.toString(helper.getLeungsakDay()));
     }
     private String findZodiacYear(int[] newYearDay, int[] currentDay, int year) {
         return currentDay[0] >= newYearDay[0] && currentDay[1] >= newYearDay[1] ? ZodiacYear.year[((year + 9) % 12) - 1] : ZodiacYear.year[((year + 8) % 12) - 1];
@@ -98,19 +100,48 @@ public class KhmerLunarDate {
         //new KhmerNumeric(t).toKhmer() +
         return new KhmerNumeric(t).toKhmer() + " " + (day > 15 ? JourneyMoon.WANING.getLabel() : JourneyMoon.WAXING.getLabel());
     }
-    private int[] mapSolarYearToLunarYear(LocalDate epochEst, KhmerNewYearHelper leangsakHelper) {
-        LocalDate epoch = LocalDate.of(1900,1,1);
-        long dayBetween = ChronoUnit.DAYS.between(epoch,epochEst) + 1;
-        for (int epoch_year = epoch.getYear(); epoch_year < epochEst.getYear(); epoch_year++){
-            dayBetween -= getDayInYear(new KhmerNewYearHelper(epoch_year));
-        }
-        //calculate day and month
+    private int[] mapSolarYearToLunarYear(LocalDate epochEst, KhmerNewYearHelper helper) {
+        LocalDate epoch = LocalDate.of(2014,1,1); // ១កើត ខែបុស្ស
+        long dayBetween = ChronoUnit.DAYS.between(epoch, epochEst) + 1;
+        int tmp_year = epoch.getYear();
+
         int tmp_d = 1;
         int tmp_m = 1;
-        if(dayBetween > 0)
-            for (int m = 2; m < 13; m++){
+        if(epochEst.isAfter(epoch)) {
+            int totalDayYear =  getDayInYear(new KhmerNewYearHelper(tmp_year));
+            System.out.println("totalDayYear" + totalDayYear );
+            System.out.println("dayBetween" + dayBetween );
+            while ( dayBetween > totalDayYear) {
+                dayBetween -= totalDayYear;
+                tmp_year++;
+                totalDayYear = getDayInYear(new KhmerNewYearHelper(tmp_year));
+                System.out.println("year: " + tmp_year + ",totalDayYear: " + totalDayYear );
+                System.out.println("R dayBetween: " + dayBetween );
+            }
+        }else{
+
+            //int totalDayYear = getDayInYear(new KhmerNewYearHelper(year));
+            //System.out.println("totalDayYear" + totalDayYear );
+            //System.out.println("dayBetween" + dayBetween );
+            while (dayBetween < 0) {
+                tmp_year--;
+                int totalDayYear = getDayInYear(new KhmerNewYearHelper(tmp_year));
+                dayBetween += totalDayYear;
+                System.out.println("year: " + tmp_year + ",totalDayYear: " + totalDayYear );
+                System.out.println("R dayBetween: " + dayBetween );
+            }
+            //System.out.println("L totalDayYear: " + totalDayYear );
+            //System.out.println("L year: " + year );
+            //System.out.println("L dayBetween: " + dayBetween );
+        }
+
+        //System.out.println("dayBetween" + dayBetween);
+        //cal day
+        if(dayBetween > 0) {
+            for (int m = 2; m <= 14; m++) { //ចន្ទគតិខែទី១ គឺ មិគសិរ=ធ្នូ, បុស្ស=មករា
                 tmp_m = m;
-                int daysOfMonth = getDayInMonth(m, leangsakHelper);
+                int daysOfMonth = getDayInMonth(m, new KhmerNewYearHelper( tmp_year ));
+                System.out.println(m +"->"+ daysOfMonth + ",," + tmp_year);
                 if(dayBetween <= daysOfMonth ) {
                     tmp_d = (int) dayBetween;
                     break;
@@ -118,9 +149,8 @@ public class KhmerLunarDate {
                     dayBetween -= daysOfMonth;
                 }
             }
-        else{
-            tmp_d = (int) (getDayInMonth(1, leangsakHelper) - Math.abs(dayBetween));
         }
+        System.out.println(tmp_d +"---"+ tmp_m);
         return new int[] {tmp_d, tmp_m};
     }
 
