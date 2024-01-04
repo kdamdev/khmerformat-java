@@ -104,17 +104,27 @@ public class KhmerLunarDate {
         LocalDate epoch = LocalDate.of(2014,1,1); // ១កើត ខែបុស្ស
         int tmp_year = epoch.getYear();
 
-        int tmp_d = 1;
+        long tmp_d = 1;
         int tmp_m = 1;
         if(epochEst.isAfter(epoch)) {
-            long dayBetween = ChronoUnit.DAYS.between(epoch, epochEst) + 1;
+            tmp_d = ChronoUnit.DAYS.between(epoch, epochEst) + 1;
             int totalDayYear =  getDayInYear(new KhmerNewYearHelper(tmp_year));
-            while ( dayBetween > totalDayYear) {
-                dayBetween -= totalDayYear;
+            while ( tmp_d > totalDayYear) {
+                tmp_d -= totalDayYear;
                 tmp_year++;
                 totalDayYear = getDayInYear(new KhmerNewYearHelper(tmp_year));
             }
-            tmp_d = (int) dayBetween;
+            // cal day
+            for (int m = 2; m <= 14; m++) { // ចន្ទគតិ ខែទី២ បុស្ស=មករា
+                tmp_m = m; // ខែទី១ មិគសិរ=ធ្នូ,
+                int daysOfMonth = getDayInMonth(m, new KhmerNewYearHelper( tmp_year ));
+                if(tmp_d <= daysOfMonth ) {
+                    //tmp_d = (int) dayBetween;
+                    break;
+                }else {
+                    tmp_d -= daysOfMonth;
+                }
+            }
         }else{
             long dayBetween = ChronoUnit.DAYS.between(epoch, epochEst) - 1;
             //int totalDayYear = getDayInYear(new KhmerNewYearHelper(year));
@@ -128,15 +138,8 @@ public class KhmerLunarDate {
                 System.out.println("year: " + tmp_year + ",totalDayYear: " + totalDayYear );
                 System.out.println("R dayBetween: " + dayBetween );
             }
-            //System.out.println("L totalDayYear: " + totalDayYear );
-            //System.out.println("L year: " + year );
-            //System.out.println("L dayBetween: " + dayBetween );
-        }
 
-        //System.out.println("dayBetween" + dayBetween);
-        //cal day
-        if(tmp_d > 0) {
-            for (int m = 2; m <= 14; m++) { // ចន្ទគតិ ខែទី២ បុស្ស=មករា
+            for (int m = 14; m <= 14; m++) { // ចន្ទគតិ ខែទី២ បុស្ស=មករា
                 tmp_m = m; // ខែទី១ មិគសិរ=ធ្នូ,
                 int daysOfMonth = getDayInMonth(m, new KhmerNewYearHelper( tmp_year ));
                 if(tmp_d <= daysOfMonth ) {
@@ -147,8 +150,12 @@ public class KhmerLunarDate {
                 }
             }
         }
+
+        //System.out.println("dayBetween" + dayBetween);
+        //cal day
+
         System.out.println("tmp_m: " + tmp_m);
-        return new int[] {tmp_d, tmp_m};
+        return new int[] {(int) tmp_d, tmp_m};
     }
 
     public String toString() {
