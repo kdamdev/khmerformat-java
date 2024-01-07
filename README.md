@@ -55,3 +55,7 @@ numeric.toKhmerText() // មួយរយម្ភៃបីលានបួនរ�
 2. Choun Nat Dictionary && Khmer Dictionary 2022  
 3. [Google](https://www.google.com/)
 4. [ChatGPT](https://chat.openai.com/auth/login)
+5. [ThmeyThmey](https://thmeythmey.com/?page=detail&id=59282)
+6. [wikipedia ចន្ទគតិ](https://km.m.wikipedia.org/wiki/%E1%9E%85%E1%9E%93%E1%9F%92%E1%9E%91%E1%9E%82%E1%9E%8F%E1%9E%B7)
+7. [wikipedia](https://km.wikipedia.org/wiki/%E1%9E%A2%E1%9E%B6%E1%9E%9F%E1%9E%B6%E1%9E%8D)
+8. [https://btkhmer.com/Cult-Mohasankran-KH.pdf](https://btkhmer.com/Cult-Mohasankran-KH.pdf)
