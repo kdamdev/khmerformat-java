@@ -50,8 +50,8 @@ numeric.toKhmer(true) // ១២៣,៤៥៦,៧៨៩
 numeric.toKhmerText() // មួយរយម្ភៃបីលានបួនរយហាសិបប្រាំមួយពាន់ប្រាំពីររយប៉ែតសិបប្រាំបួន
 ````
 
-# Authors and acknowledgment
-Reference:
+# Reference
 1. [Khmer New Year Time Calculation](http://www.dahlina.com/education/khmer_new_year_time.html)
-2. [Google](https://www.google.com/)
-3. [ChatGPT](https://chat.openai.com/auth/login)
+2. Choun Nat Dictionary && Khmer Dictionary 2022  
+3. [Google](https://www.google.com/)
+4. [ChatGPT](https://chat.openai.com/auth/login)
