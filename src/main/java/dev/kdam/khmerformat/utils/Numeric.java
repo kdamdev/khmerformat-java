@@ -1,7 +1,7 @@
 package dev.kdam.khmerformat.utils;
 
-import dev.kdam.khmerformat.enums.Numeric;
-import dev.kdam.khmerformat.enums.NumericText;
+import dev.kdam.khmerformat.enums.Number;
+import dev.kdam.khmerformat.enums.NumberText;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -9,13 +9,13 @@ import java.util.stream.Collectors;
 /**
  * Numeric
  */
-public class KhmerNumeric {
+public class Numeric {
     private final String number;
 
     /**
      * @param number
      */
-    public KhmerNumeric(String number)  {
+    public Numeric(String number)  {
         if (!number.matches("^[^.,]*\\.?[^.,]*$")) throw new IllegalArgumentException("Invalid String Number.");
         this.number = number;
     }
@@ -23,14 +23,14 @@ public class KhmerNumeric {
     /**
      * @param number
      */
-    public KhmerNumeric(Integer number) {
+    public Numeric(Integer number) {
         this.number = String.valueOf(number);
     }
     /**
      * @return String
      */
     public String toKhmer(){
-        return  Arrays.stream( this.number.split( "" )).map( x-> x.indexOf( '.' ) != -1 || x.indexOf( '-' ) != -1 ? x : Numeric.num[Integer.parseInt( x )]
+        return  Arrays.stream( this.number.split( "" )).map( x-> x.indexOf( '.' ) != -1 || x.indexOf( '-' ) != -1 ? x : Number.num[Integer.parseInt( x )]
         ).collect( Collectors.joining("") );
     }
 
@@ -42,7 +42,7 @@ public class KhmerNumeric {
     public String toKhmer(boolean comma){
         String[] parts = this.number.split("\\.");
         parts[0] = parts[0].replaceAll("(?<=\\d)(?=(\\d{3})+$)", ",");
-        return  Arrays.stream(String.join( ".", parts ).split( "" )).map( x-> x.indexOf( '.' ) != -1 || x.indexOf( ',' ) != -1 || x.indexOf( '-' ) != -1 ? x : Numeric.num[Integer.parseInt( x )]
+        return  Arrays.stream(String.join( ".", parts ).split( "" )).map( x-> x.indexOf( '.' ) != -1 || x.indexOf( ',' ) != -1 || x.indexOf( '-' ) != -1 ? x : Number.num[Integer.parseInt( x )]
         ).collect( Collectors.joining("") );
     }
 
@@ -55,11 +55,11 @@ public class KhmerNumeric {
 
         String fractionalWord = "";
         if(value.length == 2 ) {
-            fractionalWord = NumericText.sign[0] + Arrays.stream( value[1].split("") ).map( m-> NumericText.one_digit[Integer.parseInt( m )] ).collect( Collectors.joining("") );
+            fractionalWord = NumberText.sign[0] + Arrays.stream( value[1].split("") ).map(m-> NumberText.one_digit[Integer.parseInt( m )] ).collect( Collectors.joining("") );
         }
 
         if (num == 0) {
-            return NumericText.one_digit[0];
+            return NumberText.one_digit[0];
         }
 
         int i = 0;
@@ -67,7 +67,7 @@ public class KhmerNumeric {
 
         while (num > 0) {
             if (num % 1000 != 0) {
-                words.insert( 0, helper( num % 1000 ) + NumericText.four_digit[i]);
+                words.insert( 0, helper( num % 1000 ) + NumberText.four_digit[i]);
             }
             num /= 1000;
             i++;
@@ -83,11 +83,11 @@ public class KhmerNumeric {
         if (number == 0) {
             return "";
         } else if (number < 10) {
-            return NumericText.one_digit[(int) number];
+            return NumberText.one_digit[(int) number];
         } else if (number < 100) {
-            return NumericText.two_digit[(int) (number / 10)] + helper(number % 10);
+            return NumberText.two_digit[(int) (number / 10)] + helper(number % 10);
         } else {
-            return NumericText.one_digit[(int) (number / 100)] + NumericText.three_digit[0] + helper(number % 100);
+            return NumberText.one_digit[(int) (number / 100)] + NumberText.three_digit[0] + helper(number % 100);
         }
     }
 }

@@ -1,15 +1,18 @@
 package dev.kdam;
 
-import dev.kdam.khmerformat.utils.KhmerLunarDate;
+import dev.kdam.khmerformat.KhmerDate;
+import dev.kdam.khmerformat.utils.LunarDate;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.time.LocalDate;
+
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class LunarTest
     extends TestCase
 {
     /**
@@ -17,7 +20,7 @@ public class AppTest
      *
      * @param testName name of the test case
      */
-    public AppTest( String testName )
+    public LunarTest(String testName )
     {
         super( testName );
     }
@@ -27,7 +30,7 @@ public class AppTest
      */
     public static Test suite()
     {
-        return new TestSuite( AppTest.class );
+        return new TestSuite( LunarTest.class );
     }
 
     /**
@@ -35,22 +38,28 @@ public class AppTest
      */
     public void testLeungSak()
     {
-        KhmerLunarDate lunar = new KhmerLunarDate(16, 4,2024 );
+        LunarDate lunar = KhmerDate.LunarDate(LocalDate.of(2024, 4,16 ));
         Assert.assertEquals(lunar.toString(), "ថ្ងៃអង្គារ ៨ កើត ខែចេត្រ ឆ្នាំរោង ឆស័ក ព.ស.២៥៦៧");
     }
     public void testVanaBat()
     {
-        KhmerLunarDate lunar = new KhmerLunarDate(15, 4,2024 );
+        LunarDate lunar = KhmerDate.LunarDate(LocalDate.of(2024, 4,15 ));
         Assert.assertEquals(lunar.toString(), "ថ្ងៃចន្ទ ៧ កើត ខែចេត្រ ឆ្នាំរោង បញ្ចស័ក ព.ស.២៥៦៧");
     }
     public void testNewYear()
     {
-        KhmerLunarDate lunar = new KhmerLunarDate(13, 4,2024 );
+        LunarDate lunar = KhmerDate.LunarDate(LocalDate.of(2024, 4, 13 ));
         Assert.assertEquals(lunar.toString(), "ថ្ងៃសៅរ៍ ៥ កើត ខែចេត្រ ឆ្នាំរោង បញ្ចស័ក ព.ស.២៥៦៧");
     }
     public void testEpoch()
     {
-        KhmerLunarDate lunar = new KhmerLunarDate(1, 1,2014 );
+        LunarDate lunar = KhmerDate.LunarDate(LocalDate.of(2014, 1,1 ));
+//        System.out.println(lunar.getDayOfWeek());
+//        System.out.println(lunar.getDayOfMonth());
+//        System.out.println(lunar.getMonth());
+//        System.out.println(lunar.getZodiacYear());
+//        System.out.println(lunar.getEra());
+//        System.out.println(lunar.getBeYear());
         Assert.assertEquals(lunar.getDayOfMonth(), "១ កើត");
     }
 }

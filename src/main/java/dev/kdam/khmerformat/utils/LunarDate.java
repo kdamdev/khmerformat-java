@@ -4,30 +4,20 @@ import dev.kdam.khmerformat.enums.*;
 import dev.kdam.khmerformat.helper.KhmerNewYearHelper;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 /**
  * KhmerLunarDate
  */
-public class KhmerLunarDate {
-    private final LocalDate localDate;
+public class LunarDate {
     private String dayOfWeek = "";
     private String dayOfMonth = "";
     private String month = "";
     private String zodiacYear = "";
     private String era = "";
     private String beYear = "";
-    public KhmerLunarDate(int day, int month, int year) {
-        localDate = LocalDate.of( year, month, day).atStartOfDay(ZoneId.of("Asia/Phnom_Penh")).toLocalDate();
-        this.init();
-    }
-    public KhmerLunarDate(){
-        localDate = LocalDate.now(ZoneId.of("Asia/Phnom_Penh"));
-        this.init();
-    }
-    public void init(){
+    public LunarDate(LocalDate localDate) {
         KhmerNewYearHelper helper   = new KhmerNewYearHelper(localDate.getYear());
         this.dayOfWeek              = DayOfWeek.day_of_week[localDate.getDayOfWeek().getValue() % 7];
         int[] dayAndMonth           = mapSolarYearToLunarYear(localDate, helper );
@@ -36,7 +26,7 @@ public class KhmerLunarDate {
         this.month                  = getLunarMonth(dayAndMonth[1], dayAndMonth[3] == 1);
         this.zodiacYear             = findZodiacYear(helper.getNewYearDay(), dayAndMonth);
         this.era                    = findEra(helper.getLeungsakDay(), dayAndMonth);
-        this.beYear                 = new KhmerNumeric(findBeYear(dayAndMonth)).toKhmer();
+        this.beYear                 = new Numeric(findBeYear(dayAndMonth)).toKhmer();
     }
     private String findZodiacYear(int[] newYearDay, int[] currentDate) {
         int index = (currentDate[2] + 9) % 12;
@@ -88,7 +78,7 @@ public class KhmerLunarDate {
 
     private String getLunarDayOfMonth(int day) {
         int t = day % 15 == 0 ? 15 : day % 15;
-        return new KhmerNumeric(t).toKhmer() + " " + (day > 15 ? JourneyMoon.WANING.getLabel() : JourneyMoon.WAXING.getLabel());
+        return new Numeric(t).toKhmer() + " " + (day > 15 ? JourneyMoon.WANING.getLabel() : JourneyMoon.WAXING.getLabel());
     }
     private int[] mapSolarYearToLunarYear(LocalDate epochEst, KhmerNewYearHelper helper) {
         LocalDate epoch = LocalDate.of(2014,1,1); // ត្រូវតែ ១កើត ខែបុស្ស, 1900, 1938, 1957, 2014, 2033, 2071, 2090, 2185
@@ -98,8 +88,8 @@ public class KhmerLunarDate {
 
         if(epochEst.isAfter(epoch) || epochEst.isEqual(epoch)) {
             tmp_d = ChronoUnit.DAYS.between(epoch, epochEst) + 1;
-            int tmp_y = 0;
-            for ( int tmp_year = epoch.getYear(); tmp_year < epochEst.getYear(); tmp_year++ ) {
+            int tmp_y = epoch.getYear();
+            for ( int tmp_year = tmp_y; tmp_year < epochEst.getYear(); tmp_year++ ) {
                 int totalDayYear =  getDayInYear(new KhmerNewYearHelper(tmp_year));
                 if(tmp_d < totalDayYear) break;
                 tmp_d -= totalDayYear;
