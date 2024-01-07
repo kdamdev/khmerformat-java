@@ -18,7 +18,7 @@ public class App
 //        System.out.println( numeric.toKhmerText() );
 //        System.out.println( "-----------------" );
 
-        KhmerLunarDate lunar = new KhmerLunarDate(31, 12,2015 );
+        KhmerLunarDate lunar = new KhmerLunarDate(13, 4,2020 );
         System.out.println(lunar.toString());
         System.out.println( "+++++++++++++" );
 

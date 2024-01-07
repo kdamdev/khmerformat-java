@@ -9,5 +9,5 @@ package dev.kdam.khmerformat.enums;
  */
 public class LunarMonth {
     public static String[] month = { "មិគសិរ", "បុស្ស", "មាឃ", "ផល្គុន", "ចេត្រ", "ពិសាខ", "ជេស្ឋ", "អាសាឍ", "ស្រាពណ៍", "ភទ្របទ", "អស្សុជ", "កត្ដិក" };
-    public static String[] leapYearMonth = { "បឋមាសាឍ", "ទុតិយាសាឍ" };
+    public static String[] leapYearMonth = { "មិគសិរ", "បុស្ស", "មាឃ", "ផល្គុន", "ចេត្រ", "ពិសាខ", "ជេស្ឋ","បឋមាសាឍ", "ទុតិយាសាឍ", "ស្រាពណ៍", "ភទ្របទ", "អស្សុជ", "កត្ដិក" };
 }

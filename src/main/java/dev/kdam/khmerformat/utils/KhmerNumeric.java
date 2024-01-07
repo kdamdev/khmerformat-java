@@ -30,7 +30,7 @@ public class KhmerNumeric {
      * @return String
      */
     public String toKhmer(){
-        return  Arrays.stream( this.number.split( "" )).map( x-> x.indexOf( '.' ) != -1 ? x : Numeric.num[Integer.parseInt( x )]
+        return  Arrays.stream( this.number.split( "" )).map( x-> x.indexOf( '.' ) != -1 || x.indexOf( '-' ) != -1 ? x : Numeric.num[Integer.parseInt( x )]
         ).collect( Collectors.joining("") );
     }
 
@@ -42,7 +42,7 @@ public class KhmerNumeric {
     public String toKhmer(boolean comma){
         String[] parts = this.number.split("\\.");
         parts[0] = parts[0].replaceAll("(?<=\\d)(?=(\\d{3})+$)", ",");
-        return  Arrays.stream(String.join( ".", parts ).split( "" )).map( x-> x.indexOf( '.' ) != -1 || x.indexOf( ',' ) != -1 ? x : Numeric.num[Integer.parseInt( x )]
+        return  Arrays.stream(String.join( ".", parts ).split( "" )).map( x-> x.indexOf( '.' ) != -1 || x.indexOf( ',' ) != -1 || x.indexOf( '-' ) != -1 ? x : Numeric.num[Integer.parseInt( x )]
         ).collect( Collectors.joining("") );
     }
 
