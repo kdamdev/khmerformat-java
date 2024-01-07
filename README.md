@@ -53,3 +53,5 @@ numeric.toKhmerText() // មួយរយម្ភៃបីលានបួនរ�
 # Authors and acknowledgment
 Reference:
 1. [Khmer New Year Time Calculation](http://www.dahlina.com/education/khmer_new_year_time.html)
+2. [Google](https://www.google.com/)
+3. [ChatGPT](https://chat.openai.com/auth/login)
