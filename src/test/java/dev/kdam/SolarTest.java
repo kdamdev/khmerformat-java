@@ -24,9 +24,9 @@ public class SolarTest extends TestCase {
     public void testToString()
     {
         SolarDate solarDate = KhmerDate.SolarDate(LocalDate.of(2024, 4, 13 ));
-        System.out.println(solarDate.getDay());
-        System.out.println(solarDate.getMonth());
-        System.out.println(solarDate.getYear());
+//        System.out.println(solarDate.getDay());
+//        System.out.println(solarDate.getMonth());
+//        System.out.println(solarDate.getYear());
         Assert.assertEquals("ថ្ងៃទី១៣ ខែមេសា ឆ្នាំ២០២៤", solarDate.toString());
     }
 }

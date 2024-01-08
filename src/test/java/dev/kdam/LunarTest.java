@@ -34,7 +34,7 @@ public class LunarTest
     }
 
     /**
-     * Rigourous Test :-)
+     * testLeungSak Test :-)
      */
     public void testLeungSak()
     {
