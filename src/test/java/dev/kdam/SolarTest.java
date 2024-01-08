@@ -1,8 +1,6 @@
 package dev.kdam;
 
 import dev.kdam.khmerformat.KhmerDate;
-import dev.kdam.khmerformat.KhmerNumeric;
-import dev.kdam.khmerformat.utils.Numeric;
 import dev.kdam.khmerformat.utils.SolarDate;
 import junit.framework.Assert;
 import junit.framework.Test;

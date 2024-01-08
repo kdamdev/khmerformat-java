@@ -1,15 +1,11 @@
 package dev.kdam;
 
-import dev.kdam.khmerformat.KhmerDate;
 import dev.kdam.khmerformat.KhmerNumeric;
-import dev.kdam.khmerformat.utils.LunarDate;
 import dev.kdam.khmerformat.utils.Numeric;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.time.LocalDate;
 
 public class NumericTest extends TestCase {
     public NumericTest(String testName )
