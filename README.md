@@ -8,8 +8,13 @@ Pre-requires
 How to build
 * `mvn clean install`
 
+# How to install
 ````
-
+<dependency>
+  <groupId>io.github.kdamdev</groupId>
+  <artifactId>khmerformat</artifactId>
+  <version>1.0.0</version>
+</dependency>
 ````
 # Usages
 ##  Khmer Lunar Date
