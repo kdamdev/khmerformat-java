@@ -1,7 +1,7 @@
 package dev.kdam;
 
-import dev.kdam.khmerformat.KhmerDate;
-import dev.kdam.khmerformat.utils.LunarDate;
+import io.github.kdamdev.khmerformat.KhmerDate;
+import io.github.kdamdev.khmerformat.utils.LunarDate;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;

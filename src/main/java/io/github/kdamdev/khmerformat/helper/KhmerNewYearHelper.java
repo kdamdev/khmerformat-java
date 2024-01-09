@@ -1,8 +1,8 @@
-package dev.kdam.khmerformat.helper;
+package io.github.kdamdev.khmerformat.helper;
 
-import dev.kdam.khmerformat.entity.Sun;
-import dev.kdam.khmerformat.entity.SoryaLeangsak;
-import dev.kdam.khmerformat.entity.VanabatDay;
+import io.github.kdamdev.khmerformat.entity.Sun;
+import io.github.kdamdev.khmerformat.entity.SoryaLeangsak;
+import io.github.kdamdev.khmerformat.entity.VanabatDay;
 
 import java.time.Duration;
 import java.util.ArrayList;

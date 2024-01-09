@@ -1,4 +1,4 @@
-package dev.kdam.khmerformat.enums;
+package io.github.kdamdev.khmerformat.enums;
 
 /**
  * KhmerNumeric

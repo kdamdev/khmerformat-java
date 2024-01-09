@@ -1,7 +1,7 @@
 package dev.kdam;
 
-import dev.kdam.khmerformat.KhmerNumeric;
-import dev.kdam.khmerformat.utils.Numeric;
+import io.github.kdamdev.khmerformat.KhmerNumeric;
+import io.github.kdamdev.khmerformat.utils.Numeric;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,7 +1,7 @@
-package dev.kdam.khmerformat;
+package io.github.kdamdev.khmerformat;
 
-import dev.kdam.khmerformat.utils.LunarDate;
-import dev.kdam.khmerformat.utils.SolarDate;
+import io.github.kdamdev.khmerformat.utils.LunarDate;
+import io.github.kdamdev.khmerformat.utils.SolarDate;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

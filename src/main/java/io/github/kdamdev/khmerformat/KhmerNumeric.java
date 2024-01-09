@@ -1,6 +1,6 @@
-package dev.kdam.khmerformat;
+package io.github.kdamdev.khmerformat;
 
-import dev.kdam.khmerformat.utils.Numeric;
+import io.github.kdamdev.khmerformat.utils.Numeric;
 
 /**
  * KhmerNumeric

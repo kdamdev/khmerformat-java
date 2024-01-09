@@ -1,4 +1,4 @@
-package dev.kdam.khmerformat.entity;
+package io.github.kdamdev.khmerformat.entity;
 
 public class SoryaLeangsak {
     private int LesserEra;

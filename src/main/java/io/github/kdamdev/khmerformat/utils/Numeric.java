@@ -1,7 +1,7 @@
-package dev.kdam.khmerformat.utils;
+package io.github.kdamdev.khmerformat.utils;
 
-import dev.kdam.khmerformat.enums.Number;
-import dev.kdam.khmerformat.enums.NumberText;
+import io.github.kdamdev.khmerformat.enums.Number;
+import io.github.kdamdev.khmerformat.enums.NumberText;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

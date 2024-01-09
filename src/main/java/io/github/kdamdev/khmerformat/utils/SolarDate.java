@@ -1,6 +1,6 @@
-package dev.kdam.khmerformat.utils;
+package io.github.kdamdev.khmerformat.utils;
 
-import dev.kdam.khmerformat.enums.SolarMonth;
+import io.github.kdamdev.khmerformat.enums.SolarMonth;
 
 import java.time.LocalDate;
 

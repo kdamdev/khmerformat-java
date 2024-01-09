@@ -1,4 +1,4 @@
-package dev.kdam.khmerformat.enums;
+package io.github.kdamdev.khmerformat.enums;
 
 /**
  * ខែសេស (មិគសិរ មាឃ ចេត្រ ជេស្ឋ ស្រាពណ៍ និងអស្សុជ) មានតែ២៩ថ្ងៃ ឯខែគូ (បុស្ស ផល្គុន ពិសាខ អាសាឍ ភទ្របទ និងកត្តិក) មាន៣០ថ្ងៃ ។
