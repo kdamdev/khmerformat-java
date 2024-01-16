@@ -13,7 +13,7 @@ How to build
 <dependency>
   <groupId>io.github.kdamdev</groupId>
   <artifactId>khmerformat</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ````
 # Usages
