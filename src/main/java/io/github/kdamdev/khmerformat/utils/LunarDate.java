@@ -5,6 +5,7 @@ import io.github.kdamdev.khmerformat.helper.KhmerNewYearHelper;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 
 /**
  * KhmerLunarDate
@@ -71,8 +72,8 @@ public class LunarDate {
         }
         return month % 2 == 0 ? 30 : 29;
     }
-    private int getDayInYear(KhmerNewYearHelper soryaLeungsakHelper) {
-        return soryaLeungsakHelper.isAthikmeas() ? 384 : soryaLeungsakHelper.isChes30Days() ? 355 : 354;
+    private int getDayInYear(KhmerNewYearHelper helper) {
+        return helper.isAthikmeas() ? 384 : helper.isChes30Days() ? 355 : 354;
     }
 
     private String getLunarDayOfMonth(int day) {
@@ -88,24 +89,34 @@ public class LunarDate {
         if(epochEst.isAfter(epoch) || epochEst.isEqual(epoch)) {
             tmp_d = ChronoUnit.DAYS.between(epoch, epochEst) + 1;
             int tmp_y = epoch.getYear();
-            for ( int tmp_year = tmp_y; tmp_year < epochEst.getYear(); tmp_year++ ) {
+            for ( int tmp_year = tmp_y; tmp_year <= epochEst.getYear(); tmp_year++ ) {
                 int totalDayYear =  getDayInYear(new KhmerNewYearHelper(tmp_year));
                 if(tmp_d < totalDayYear) break;
                 tmp_d -= totalDayYear;
                 tmp_y = tmp_year;
             }
             // cal day
-            tmp_y += 1;
+            //tmp_y += 1;
             KhmerNewYearHelper epochHelper = new KhmerNewYearHelper(tmp_y);
+//            if(tmp_d > getDayInYear( epochHelper )) {
+//
+//            }
+            System.out.println("Remain Before: " + tmp_d);
+            //System.out.println(tmp_y + ", Remain Before 1: " + getDayInYear( epochHelper ));
+            int ttt = 0;
             for (int m = 2; m <= 14; m++) { // ចន្ទគតិ ខែទី២ បុស្ស=មករា
                 tmp_m = m; // ខែទី១ មិគសិរ=ធ្នូ
                 int daysOfMonth = getDayInMonth(tmp_m, epochHelper);
+                ttt += daysOfMonth;
                 if(tmp_d <= daysOfMonth ) {
                     break;
                 }else {
                     tmp_d -= daysOfMonth;
                 }
             }
+            System.out.println("Total In: " + ttt);
+            System.out.println("Remain: " + tmp_d);
+            System.out.println("Move up: " + Arrays.toString( new int[]{(int) tmp_d, tmp_m == 14 ? 1 : tmp_m, tmp_y, epochHelper.isAthikmeas() ? 1 : 0} ) );
             return new int[] {(int) tmp_d, tmp_m == 14 ? 1 : tmp_m, tmp_y, epochHelper.isAthikmeas() ? 1 : 0};
         }else{
             tmp_d = ChronoUnit.DAYS.between(epoch, epochEst) + 1;
@@ -126,6 +137,7 @@ public class LunarDate {
                 }
                 tmp_m--;
             }
+            System.out.println("Move down: " + Arrays.toString( new int[] {(int) tmp_d, tmp_m, tmp_y, epochHelper.isAthikmeas() ? 1 : 0} ) );
             return new int[] {(int) tmp_d, tmp_m, tmp_y, epochHelper.isAthikmeas() ? 1 : 0};
         }
     }

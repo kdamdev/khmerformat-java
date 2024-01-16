@@ -1,4 +1,4 @@
-package dev.kdam;
+package io.github.kdamdev;
 
 import io.github.kdamdev.khmerformat.KhmerNumeric;
 import io.github.kdamdev.khmerformat.utils.Numeric;

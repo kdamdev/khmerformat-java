@@ -1,4 +1,4 @@
-package dev.kdam;
+package io.github.kdamdev;
 
 import io.github.kdamdev.khmerformat.KhmerDate;
 import io.github.kdamdev.khmerformat.utils.SolarDate;
