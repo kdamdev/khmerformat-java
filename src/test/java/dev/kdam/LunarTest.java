@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 import java.time.LocalDate;
 
 /**
- * Unit test for simple App.
+ * Unit test for Khmer Format Library.
  */
 public class LunarTest
     extends TestCase
