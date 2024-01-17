@@ -55,12 +55,6 @@ public class LunarTest
     {
         LunarDate lunar = KhmerDate.LunarDate(LocalDate.of(2014, 1, 1 ));
         Assert.assertEquals(lunar.getDayOfMonth(), "១ កើត");
-//        System.out.println(lunar.getDayOfWeek());
-//        System.out.println(lunar.getDayOfMonth());
-//        System.out.println(lunar.getMonth());
-//        System.out.println(lunar.getZodiacYear());
-//        System.out.println(lunar.getEra());
-//        System.out.println(lunar.getBeYear());
     }
 
     public void testEndYear2023()
